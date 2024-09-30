@@ -1,7 +1,7 @@
-=== Extra product options For WooCommerce | Custom Product Addons and Fields ===
+=== Extra Product Options For WooCommerce | Custom Product Addons and Fields ===
 Contributors: ThemeHigh
 Donate link: https://themehigh.com/
-Tags:  Extra product option, Woocommerce Product addons, Woocommerce Extra product fields, Woocommerce product option, Woocommerce product fields
+Tags:  Extra product options, Woocommerce product addons, Woocommerce extra product fields, Woocommerce product options, Woocommerce product fields
 Requires at least: 4.9
 Tested up to: 6.6
 Requires PHP: 5.6
@@ -28,7 +28,7 @@ Transform your WooCommerce product pages with **Extra Product Options for WooCom
 
 ✳️ **Custom Field values →** Show/hide field values on multiple pages.
 
-✳️ **Custom Hooks →** Easily Add Features with developer-friendly custom Hooks.
+✳️ **Custom Hooks →** Easily Add more functionalities with developer-friendly Custom Hooks.
 
 [Try Demo](https://flydemos.com/woodmart-wepo-demo/shop/) | [Documentation](https://www.themehigh.com/docs/category/extra-product-option-for-woocommerce/) | [Get Pro ](https://www.themehigh.com/product/woocommerce-extra-product-options/?utm_source=wepo_free&utm_medium=readme&utm_campaign=wepo_upgrade_link) 
 
@@ -63,7 +63,7 @@ https://www.youtube.com/watch?v=YoVPQhdwuis
 1. Before add to cart button 
 2. After add to cart button
 
-= ✅ Display Rules =
+= ✅ DISPLAY RULES =
 Show/hide fields and sections based on; 
 
 1.  Products
@@ -80,7 +80,7 @@ Show/hide fields and sections based on;
 
 = ✅ CUSTOMIZE ADD TO CART BUTTON TEXT =
 
-= ✅ Multiple Themes Compatibility =
+= ✅ MULTIPLE THEMES COMPATIBILITY =
 *   Astra - [Try Demo](https://flydemos.com/astra-wepo-demo/shop/)
 *   WoodMart - [Try Demo](https://flydemos.com/woodmart-wepo-demo/shop)
 *   Divi
@@ -98,7 +98,7 @@ While the free version of [WooCommerce Extra Product Options](https://flydemos.c
 = 👉 8 additional field types and advanced section positions for more flexibility. =
 = 👉 Sophisticated display rules to customize product displays more precisely. =
 = 👉 Price fields to adjust pricing based on customer choices. =
-= 👉 Custom & confirm validators to ensure data accuracy =
+= 👉 Custom & confirm validators to ensure data accuracy. =
 
 [GET FULL ACCESS WITH PREMIUM NOW !](https://www.themehigh.com/product/woocommerce-extra-product-options/?utm_source=wepo_free&utm_medium=readme&utm_campaign=wepo_upgrade_link)
 
@@ -106,7 +106,7 @@ While the free version of [WooCommerce Extra Product Options](https://flydemos.c
 The Extra product options plugin is WPML compatible and it lets you create product pages in multiple languages.
 
 == 🔥 SEE  OUR  PREMIUM FEATURES ==
-[Usecase Demo](https://flydemos.com/wepo/?utm_source=wepo_free&utm_medium=readme&utm_campaign=try_demo) | [Documentation](https://www.themehigh.com/docs/category/extra-product-option-for-woocommerce/) | [Get Pro](https://www.themehigh.com/product/woocommerce-extra-product-options/?utm_source=wepo_free&utm_medium=readme&utm_campaign=wepo_upgrade_link) 
+[Use-case Demo](https://flydemos.com/wepo/?utm_source=wepo_free&utm_medium=readme&utm_campaign=try_demo) | [Documentation](https://www.themehigh.com/docs/category/extra-product-option-for-woocommerce/) | [Get Pro](https://www.themehigh.com/product/woocommerce-extra-product-options/?utm_source=wepo_free&utm_medium=readme&utm_campaign=wepo_upgrade_link) 
 
 = ✅  ADD 8 ADDITIONAL PRODUCT FIELDS =
 
@@ -138,7 +138,7 @@ The Extra product options plugin is WPML compatible and it lets you create produ
 
 - **Dynamic:** Set the price per ‘n’ number of units. The add-on price will be calculated based on the total number of units selected by the customer and added to the product price.
 
-- **Dynamic -Exclude base price:** A price per unit excluding the base price will be assigned, where the total price as per the units entered by the shopper will be added to the total price.
+- **Dynamic - Exclude base price:** A price per unit excluding the base price will be assigned, where the total price as per the units entered by the shopper will be added to the total price.
 
 - **Percentage:** Set the add-on price as a percentage. The specified percentage amount will be added to the product price.
 
@@ -169,17 +169,17 @@ At themehigh, we specialize in providing thoughtful solutions to help you create
 🏆 Most Lightweight Plugins
 
 == 🔥 Explore More ==
-If you like the Extra product option, then consider checking out our other WordPress Plugins: 
+If you like the Extra Product Options For WooCommerce, then consider checking out our other WordPress Plugins: 
 
 👉 [Checkout Field Editor (Checkout Manager) for WooCommerce:](https://wordpress.org/plugins/woo-checkout-field-editor-pro/) 
 This Checkout Plugin from Themehigh lets you add 20 different types of custom checkout fields 
-to help you customise and organise your WooCommerce Checkout page.
-👉 [Variation Swatches for WooCommerce:](https://wordpress.org/plugins/product-variation-swatches-for-woocommerce/)
-Using the WooCommerce Variation Swatches plugin, you can easily convert default WooCommerce product attribute drop-downs into customizable swatches and display customized product variations.
-👉 [Email Customizer for WooCommerce | Drag and Drop Email Templates Builder:](https://wordpress.org/plugins/email-customizer-for-woocommerce/)
-Email Customizer is a plugin that helps you effortlessly customise your WooCommerce transactional emails using its intuitive drag-and-drop builder.
-👉 [  MultiStep Checkout for WooCommerce:](https://wordpress.org/plugins/woo-multistep-checkout/)
-The Multistep checkout plugin helps you split the regular WooCommerce checkout process into multiple steps and create a simpler and more organized checkout experience.
+to help you customise and organise your WooCommerce Checkout Page.
+👉 [Variation Swatches For WooCommerce:](https://wordpress.org/plugins/product-variation-swatches-for-woocommerce/)
+Using the WooCommerce Variation Swatches Plugin, you can easily convert default WooCommerce product attribute drop-downs into customizable swatches and display customized product variations.
+👉 [Email Customizer For WooCommerce | Drag and Drop Email Templates Builder:](https://wordpress.org/plugins/email-customizer-for-woocommerce/)
+Email Customizer is a Plugin that helps you effortlessly customise your WooCommerce transactional emails using its intuitive drag-and-drop builder.
+👉 [MultiStep Checkout For WooCommerce:](https://wordpress.org/plugins/woo-multistep-checkout/)
+The Multistep Checkout Plugin helps you split the regular WooCommerce checkout process into multiple steps and create a simpler and more organized checkout experience.
 
 **Happy Users of Extra Product Options Plugin.**
 
@@ -197,7 +197,7 @@ The Multistep checkout plugin helps you split the regular WooCommerce checkout p
 👉 [GET DOCUMENTATION](https://www.themehigh.com/docs/category/extra-product-option-for-woocommerce/)
 👉 [GET THEMEHIGH SUPPORT](https://www.themehigh.com/docs/support/)
 👉 [JOIN COMMUNITY](https://www.facebook.com/groups/themehigh/)
-👉 Follow ThemeHigh on FOLLOW US ON [Facebook](https://www.facebook.com/ThemeHigh-319611541768603/), [LinkedIn](https://www.linkedin.com/company/themehigh/), [Twitter](https://twitter.com/themehigh/) & [YouTube](https://www.youtube.com/channel/UC-_uMXaC_21j1Y2_nGjTyvg/).
+👉 FOLLOW US ON [Facebook](https://www.facebook.com/ThemeHigh-319611541768603/), [LinkedIn](https://www.linkedin.com/company/themehigh/), [Twitter](https://twitter.com/themehigh/) & [YouTube](https://www.youtube.com/channel/UC-_uMXaC_21j1Y2_nGjTyvg/).
 
 == Installation ==
 = Minimum Requirements =
