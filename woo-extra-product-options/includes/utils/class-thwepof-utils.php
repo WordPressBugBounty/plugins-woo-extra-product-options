@@ -36,6 +36,10 @@ class THWEPOF_Utils {
 	}
 
 	public static function save_sections($sections){
+		if (apply_filters('thwepof_clear_cache_before_update', false) || class_exists('Nawawi\\DocketCache\\Plugin') ) {
+			self::clear_cache(self::OPTION_KEY_CUSTOM_SECTIONS, 'options');
+		}
+
 		$result = update_option(self::OPTION_KEY_CUSTOM_SECTIONS, $sections, 'no');
 		return $result;
 	}
@@ -186,6 +190,10 @@ class THWEPOF_Utils {
 				self::save_section_hook_map($hook_map);
 			}
 		}
+	}
+
+	public static function clear_cache($key, $group){
+		wp_cache_delete($key, $group);
 	}
 
 	/*public static function get_option_display_value($name, $value, $data){
@@ -365,13 +373,13 @@ class THWEPOF_Utils {
 
 	public static function sort_sections(&$sections){
 		if(is_array($sections) && !empty($sections)){
-			self::stable_uasort($sections, array('self', 'sort_sections_by_order'));
+			self::stable_uasort($sections, array(__CLASS__, 'sort_sections_by_order'));
 		}
 	}
 
 	public static function sort_hooked_sections(&$sections){
 		if(is_array($sections) && !empty($sections)){
-			self::stable_uasort($sections, array('self', 'sort_sections_by_order'));
+			self::stable_uasort($sections, array(__CLASS__, 'sort_sections_by_order'));
 		}
 	}
 
@@ -402,7 +410,7 @@ class THWEPOF_Utils {
 			return;
 		}
 
-		$halfway = count($array) / 2;
+		$halfway = intdiv(count($array), 2);
 		$array1 = array_slice($array, 0, $halfway, TRUE);
 		$array2 = array_slice($array, $halfway, NULL, TRUE);
 
