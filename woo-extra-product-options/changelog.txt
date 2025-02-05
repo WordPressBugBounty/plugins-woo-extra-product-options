@@ -1,5 +1,8 @@
 === Changelog ===
 
+= 3.3.1 =
+* Added WooCommerce 9.6 compatibility.
+
 = 3.3.0 =
 * Added docket cache plugin compatibility.
 * Added new filter for remove object cache - 'thwepof_clear_cache_before_update'
