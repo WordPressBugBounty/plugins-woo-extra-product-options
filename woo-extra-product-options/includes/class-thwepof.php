@@ -42,6 +42,7 @@ class THWEPOF {
 				'includes/model/fields/class-wepof-field-paragraph.php',
 				'includes/model/fields/class-wepof-field-switch.php',
 				'includes/model/fields/class-wepof-field-separator.php',
+				'includes/model/fields/class-wepof-field-timepicker.php',
 				'includes/model/class-wepof-section.php',
 
 				'includes/utils/class-thwepof-utils.php',

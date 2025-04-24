@@ -1,5 +1,10 @@
 === Changelog ===
 
+= 3.3.2 =
+* Added new field type "Time Picker".
+* Added WooCommerce 9.8 compatibility.
+* Added WordPress 6.8 compatibility.
+
 = 3.3.1 =
 * Added WooCommerce 9.6 compatibility.
 

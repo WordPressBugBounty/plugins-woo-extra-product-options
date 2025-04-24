@@ -29,9 +29,13 @@ class THWEPOF_Public {
 
 			wp_enqueue_style('thwepof-public-style', THWEPOF_URL.'public/assets/css/thwepof-public'. $suffix .'.css', THWEPOF_VERSION);
 			wp_enqueue_style('jquery-ui-style', THWEPOF_URL.'public/assets/css/jquery-ui/jquery-ui.css');
+			wp_enqueue_style('jquery-timepicker', THWEPOF_URL.'public/assets/js/timepicker/jquery.timepicker.css');
 
 			wp_register_script('thwepof-input-mask', THWEPOF_URL.'public/assets/js/inputmask-js/jquery.inputmask.min.js', array('jquery'), THWEPOF_VERSION, true);
 			wp_enqueue_script('thwepof-input-mask');
+
+			wp_register_script('thwepof-timepicker-script', THWEPOF_URL.'public/assets/js/timepicker/jquery.timepicker.min.js', array('jquery'), THWEPOF_VERSION, true);
+			wp_enqueue_script('thwepof-timepicker-script');
 
 			wp_register_script('thwepof-public-script', THWEPOF_URL.'public/assets/js/thwepof-public'. $suffix .'.js', array('jquery', 'jquery-ui-datepicker'), THWEPOF_VERSION, true);
 			wp_enqueue_script('thwepof-public-script');
@@ -565,7 +569,8 @@ class THWEPOF_Public {
 
 		if($extra_options && is_array($extra_options)){
 			foreach($extra_options as $name => $field){
-				$posted_value = $this->get_posted_value($name);
+				$type = $field->get_property('type');
+				$posted_value = $this->get_posted_value($name, $type);
 				if($posted_value) {
 					if(is_array($posted_value)){
 						// Filter out any empty values
@@ -579,7 +584,7 @@ class THWEPOF_Public {
 					$data_arr = array();
 					$data_arr['name']  	 = $name;
 					$data_arr['value'] 	 = $posted_value;
-					$data_arr['type']    = $field->get_property('type');
+					$data_arr['type']    = $type;
 					$data_arr['label']   = $field->get_property('title');
 					$data_arr['options'] = $field->get_property('options');
 
@@ -587,6 +592,7 @@ class THWEPOF_Public {
 				}
 			}
 		}
+
 		return $extra_data;
 	}
 

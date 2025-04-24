@@ -1,20 +1,20 @@
 === Extra Product Options For WooCommerce | Custom Product Addons and Fields ===
 Contributors: ThemeHigh
 Donate link: https://themehigh.com/
-Tags:  extra product options, product addons, woocommerce product fields, product options, woocommerce product addons
+Tags:  extra product options, product addons, woocommerce product addons, woocommerce product fields, product options
 Requires at least: 4.9
-Tested up to: 6.7
+Tested up to: 6.8
 Requires PHP: 5.6
-Stable tag: 3.3.1
+Stable tag: 3.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-WooCommerce Extra Product Options plugin lets you add product addons (custom products field) of 19 different field types to your product page.
+WooCommerce Extra Product Options plugin lets you add product addons (custom products field) of 20 different field types to your product page.
 
 == Description ==
 🔥 **#1 Plugin for adding product addons to WooCommerce Products**
 
-Transform your WooCommerce product pages with **Extra Product Options for WooCommerce (WooCommerce Product Addons) by ThemeHigh.** With this plugin, you can add up to **19 custom product fields** and offer customised products to your customers effortlessly. With WooCommerce Extra Product Options by ThemeHigh, you can showcase **product add-ons**, easily add multiple custom fields, group similar ones into sections, and display fields based on conditions. Whether you run a small or a large online store, our plugin not only updates your store's functionality but also drives sales growth by 2X. Transform your store today, and watch how your sales grow! 
+Transform your WooCommerce product pages with **Extra Product Options for WooCommerce (WooCommerce Product Addons) by ThemeHigh.** With this plugin, you can add up to **20 custom product fields** and offer customised products to your customers effortlessly. With WooCommerce Extra Product Options by ThemeHigh, you can showcase **product add-ons**, easily add multiple custom fields, group similar ones into sections, and display fields based on conditions. Whether you run a small or a large online store, our plugin not only updates your store's functionality but also drives sales growth by 2X. Transform your store today, and watch how your sales grow! 
 
 == SEE HOW OUR FREE VERSION WORKS ==
 
@@ -30,13 +30,9 @@ Transform your WooCommerce product pages with **Extra Product Options for WooCom
 
 ✳️ **Custom Hooks →** Easily Add more functionalities with developer-friendly Custom Hooks.
 
-[Try Demo](https://flydemos.com/woodmart-wepo-demo/shop/) | [Documentation](https://www.themehigh.com/docs/category/extra-product-option-for-woocommerce/) | [Get Pro ](https://www.themehigh.com/product/woocommerce-extra-product-options/?utm_source=wepo_free&utm_medium=readme&utm_campaign=wepo_upgrade_link) 
+[Try Demo](https://flydemos.com/woodmart-wepo-demo/shop/) | [Documentation](https://www.themehigh.com/docs/category/extra-product-option-for-woocommerce/?utm_source=wepo_free&utm_medium=readme&utm_campaign=wepo_help_doc) | [Get Pro ](https://www.themehigh.com/product/woocommerce-extra-product-options/?utm_source=wepo_free&utm_medium=readme&utm_campaign=wepo_upgrade_link) 
 
---------------------------------------------
-https://www.youtube.com/watch?v=YoVPQhdwuis
---------------------------------------------
-
-= ✅  ADD 19 ADVANCED PRODUCT FIELDS TO PRODUCT PAGE =
+= ✅  ADD 20 ADVANCED PRODUCT FIELDS TO PRODUCT PAGE =
 
 1.  Text
 2.  Hidden
@@ -57,6 +53,7 @@ https://www.youtube.com/watch?v=YoVPQhdwuis
 17. Paragraph
 18. Switch
 19. Separator
+20. Time Picker 🆕
 
 = ✅ GROUP RELATED PRODUCT FIELDS INTO CUSTOM SECTIONS & DISPLAY IN 2 POSITIONS =
 
@@ -106,18 +103,18 @@ While the free version of [WooCommerce Extra Product Options](https://flydemos.c
 The Extra product options plugin is WPML compatible and it lets you create product pages in multiple languages.
 
 == 🔥 SEE  OUR  PREMIUM FEATURES ==
-[Use-case Demo](https://flydemos.com/wepo/?utm_source=wepo_free&utm_medium=readme&utm_campaign=try_demo) | [Documentation](https://www.themehigh.com/docs/category/extra-product-option-for-woocommerce/) | [Get Pro](https://www.themehigh.com/product/woocommerce-extra-product-options/?utm_source=wepo_free&utm_medium=readme&utm_campaign=wepo_upgrade_link) 
+[Use-case Demo](https://flydemos.com/wepo/?utm_source=wepo_free&utm_medium=readme&utm_campaign=try_demo) | [Documentation](https://www.themehigh.com/docs/category/extra-product-option-for-woocommerce/?utm_source=wepo_free&utm_medium=readme&utm_campaign=wepo_help_doc) | [Get Pro](https://www.themehigh.com/product/woocommerce-extra-product-options/?utm_source=wepo_free&utm_medium=readme&utm_campaign=wepo_upgrade_link) 
 
 = ✅  ADD 8 ADDITIONAL PRODUCT FIELDS =
 
     1.  Multi-select
-    2.  Time Picker
-    3.  File Upload
-    4.  HTML
-    5.  Color Palette
-    6.  Image Group
-    7.  Date & Time Range Picker
-    8.  Product Group
+    2.  File Upload
+    3.  HTML
+    4.  Color Palette
+    5.  Image Group
+    6.  Date & Time Range Picker
+    7.  Product Group
+    8.  Label Swatches 🆕
 
 = ✅ 5 EXTRA CONDITIONS TO DEFINE  DISPLAY RULES  = 
 
@@ -160,6 +157,9 @@ Custom Validator allows you to validate fields by defining rules based on regula
 
 Confirm Validator allows you to validate two fields for the same value (for example, Email and Confirm Email).
 
+ =  ✅ EDIT FROM CART FUNCTIONALITY 🆕 = 
+You can edit all the fields you have added using this plugin from the cart
+
 == Why ThemeHigh ==
 
 At themehigh, we specialize in providing thoughtful solutions to help you create your store in the easiest and simplest way possible, providing you with a smooth and enjoyable customization experience.
@@ -194,8 +194,8 @@ The Multistep Checkout Plugin helps you split the regular WooCommerce checkout p
 
 == OTHER USEFUL LINKS ==
 👉 [VIEW ALL FEATURES](https://www.themehigh.com/product/woocommerce-extra-product-options/?utm_source=wepo_free&utm_medium=readme&utm_campaign=wepo_upgrade_link)
-👉 [GET DOCUMENTATION](https://www.themehigh.com/docs/category/extra-product-option-for-woocommerce/)
-👉 [GET THEMEHIGH SUPPORT](https://www.themehigh.com/docs/support/)
+👉 [GET DOCUMENTATION](https://www.themehigh.com/docs/category/extra-product-option-for-woocommerce/?utm_source=wepo_free&utm_medium=readme&utm_campaign=wepo_help_doc)
+👉 [GET THEMEHIGH SUPPORT](https://www.themehigh.com/docs/support/?utm_source=wpvs_free&utm_medium=readme&utm_campaign=wepo_support)
 👉 [JOIN COMMUNITY](https://www.facebook.com/groups/themehigh/)
 👉 FOLLOW US ON [Facebook](https://www.facebook.com/ThemeHigh-319611541768603/), [LinkedIn](https://www.linkedin.com/company/themehigh/), [Twitter](https://twitter.com/themehigh/) & [YouTube](https://www.youtube.com/channel/UC-_uMXaC_21j1Y2_nGjTyvg/).
 
@@ -302,5 +302,7 @@ Yes, it is compatible with Astra, Storefront. Also compatible with Avada, divi b
 
 == Changelog ==
 
-= 3.3.1 =
-* Added WooCommerce 9.6 compatibility.
+= 3.3.2 =
+* Added new field type **Time Picker**.
+* Added WooCommerce 9.8 compatibility.
+* Added WordPress 6.8 compatibility.

@@ -42,7 +42,8 @@ class THWEPOF_Admin_Form_Field extends THWEPOF_Admin_Form{
 			'switch'        => __('Switch', 'woo-extra-product-options'),
 			'heading'       => __('Heading', 'woo-extra-product-options'),
 			'paragraph'     => __('Paragraph', 'woo-extra-product-options'),
-			'separator'     => __('Separator', 'woo-extra-product-options')
+			'separator'     => __('Separator', 'woo-extra-product-options'),
+			'timepicker'	=> __('Time Picker', 'woo-extra-product-options'),
 		);
 	}
 
@@ -270,6 +271,7 @@ class THWEPOF_Admin_Form_Field extends THWEPOF_Admin_Form{
 		$this->render_form_field_heading();
 		$this->render_form_field_paragraph();
 		$this->render_form_field_separator();
+		$this->render_form_field_timepicker();
 		
 		$this->render_field_form_fragment_product_list();
 		$this->render_field_form_fragment_category_list();
@@ -657,6 +659,28 @@ class THWEPOF_Admin_Form_Field extends THWEPOF_Admin_Form{
 			?>
         </table>
         <?php  
+	}
+
+	private function render_form_field_timepicker(){
+		$prop_value = $this->field_props['value'];
+		$prop_value['label'] = __('Default Value', 'woo-extra-product-options');
+
+		?>
+        <table id="thwepof_field_form_id_timepicker" class="thwepo_pp_table" width="100%" style="display:none;">
+            <?php
+			$this->render_form_elm_row($this->field_props['title']);
+			//$this->render_form_elm_row($this->field_props['title_position']);
+			$this->render_form_elm_row($prop_value);
+			$this->render_form_elm_row($this->field_props['placeholder']);
+			//$this->render_form_elm_row($this->field_props['cssclass']);
+			//$this->render_form_elm_row($this->field_props['title_class']);
+
+			$this->render_form_elm_row_cb($this->field_props['required']);
+			$this->render_form_elm_row_cb($this->field_props['enabled']);
+			$this->render_form_elm_row_cb($this->field_props['readonly']);
+			?> 
+        </table>
+        <?php   
 	}
 
 	/*

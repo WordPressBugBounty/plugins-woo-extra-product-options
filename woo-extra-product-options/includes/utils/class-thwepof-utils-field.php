@@ -82,6 +82,8 @@ class THWEPOF_Utils_Field {
 				return new WEPOF_Product_Field_Heading();
 			}else if($type === 'paragraph'){
 				return new WEPOF_Product_Field_Paragraph();
+			}else if($type === 'timepicker'){
+				return new WEPOF_Product_Field_TimePicker();
 			}
 		}else{
 			$field = new WEPOF_Product_Field_InputText();
@@ -288,6 +290,10 @@ class THWEPOF_Utils_Field {
 
 		}else if($field_type === 'separator'){
 			$field_html = self::get_html_separator($name, $field, $section, $value);
+
+		}else if($field_type === 'timepicker'){
+			$field_html = self::get_html_timepicker($name, $field, $section, $value);
+			
 		}
 		
 		return $field_html;
@@ -400,6 +406,8 @@ class THWEPOF_Utils_Field {
 
 		}else if($type === 'colorpicker'){
 			$class[] = 'thwepof-colorpicker';
+		}else if($type === 'timepicker'){
+			$class[] = ' thwepof-time-picker';
 		}
 
 		if($field->is_required()){
@@ -702,6 +710,15 @@ class THWEPOF_Utils_Field {
 		$field_html .= '</tr>';
 	
 		return $field_html;
+	}
+
+	private static function get_html_timepicker($name, $field, $section, $value){
+		$props  = self::prepare_field_props($field, $name, $value);
+		$props .= $field->is_readonly() ? ' data-readonly="yes"' : ' data-readonly="no"';
+		$input_html = '<input type="text" autocomplete="off" '.$props.' >';
+
+		$html = self::prepare_field_html_input($field, $section, $input_html);
+		return $html;
 	}
 	
 }

@@ -91,7 +91,7 @@ class THWEPOF_Admin_Settings_Pro extends THWEPOF_Admin_Settings {
                     <p class="th-feautre-desc">Some of the advanced features in the Extra Product Options premium plugin are listed below.</p>
                     <div class="th-wepo-feature-list-ul">
                         <ul class="th-wepo-feature-list">
-                            <li>27 extra product fields</li>
+                            <li>28 extra product fields</li>
                             <li>Add, edit, rearrange, duplicate & delete fields and sections</li>
                             <li>Display fields & sections conditionally</li>
                             <li>Show sections in tabular & accordion layouts</li>
@@ -108,6 +108,7 @@ class THWEPOF_Admin_Settings_Pro extends THWEPOF_Admin_Settings {
                             <li>WPML compatibility</li>
                             <li>Developer friendly with custom hooks</li>
                             <li>Create your own custom classes for styling the fields & sections</li>
+                            <li>Edit product options from cart</li>
                         </ul>   
                     </div>
                     <div class="th-get-pro">
@@ -164,7 +165,7 @@ class THWEPOF_Admin_Settings_Pro extends THWEPOF_Admin_Settings {
                                 <li><?php echo __('Checkbox', 'woo-extra-product-options');?></li>
                                 <li><?php echo __('Checkbox Group', 'woo-extra-product-options');?></li>
                                 <li><?php echo __('Date Picker', 'woo-extra-product-options');?></li>
-                                <li><?php echo __('Time Picker', 'woo-extra-product-options');?><span class="th-crown"><img src="<?php echo esc_url(THWEPOF_URL .'admin/assets/css/crown.svg'); ?>"></span></li>
+                                <li><?php echo __('Time Picker', 'woo-extra-product-options');?></li>
                                 <li><?php echo __('Date & Time Range Picker', 'woo-extra-product-options');?><span class="th-crown"><img src="<?php echo esc_url(THWEPOF_URL .'admin/assets/css/crown.svg'); ?>"></span></li>
                                 <li><?php echo __('Color Picker', 'woo-extra-product-options');?></li>
                                 <li><?php echo __('Color Palette', 'woo-extra-product-options');?><span class="th-crown"><img src="<?php echo esc_url(THWEPOF_URL .'admin/assets/css/crown.svg'); ?>"></span></li>
@@ -175,6 +176,7 @@ class THWEPOF_Admin_Settings_Pro extends THWEPOF_Admin_Settings {
                                 <li><?php echo __('Paragraph/Label', 'woo-extra-product-options');?></li>
                                 <li><?php echo __('HTML', 'woo-extra-product-options');?><span class="th-crown"><img src="<?php echo esc_url(THWEPOF_URL .'admin/assets/css/crown.svg'); ?>"></span></li>
                                 <li><?php echo __('Separator', 'woo-extra-product-options');?></li>
+                                <li><?php echo __('Label swatches', 'woo-extra-product-options');?><span class="th-new"><img src="<?php echo esc_url(THWEPOF_URL .'admin/assets/css/new.png'); ?>"></span><span class="th-crown"><img src="<?php echo esc_url(THWEPOF_URL .'admin/assets/css/crown.svg'); ?>"></span></li>
                             </ul>
                         </div>
                         <div class="th-fields-img">

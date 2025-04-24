@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Extra product options For WooCommerce | Custom Product Addons and Fields plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Extra product options For WooCommerce | Custom Product Addons and Fields 3.3.1\n"
+"Project-Id-Version: Extra product options For WooCommerce | Custom Product Addons and Fields 3.3.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/woo-extra-product-options\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-02-04T06:13:23+00:00\n"
+"POT-Creation-Date: 2025-04-08T05:27:43+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: woo-extra-product-options\n"
@@ -36,34 +36,34 @@ msgid "ThemeHigh"
 msgstr ""
 
 #: admin/class-thwepof-admin-form-field.php:27
-#: admin/class-thwepof-admin-settings-pro.php:151
+#: admin/class-thwepof-admin-settings-pro.php:152
 msgid "Text"
 msgstr ""
 
 #: admin/class-thwepof-admin-form-field.php:28
-#: admin/class-thwepof-admin-settings-pro.php:152
+#: admin/class-thwepof-admin-settings-pro.php:153
 msgid "Hidden"
 msgstr ""
 
 #: admin/class-thwepof-admin-form-field.php:29
 #: admin/class-thwepof-admin-form-field.php:57
-#: admin/class-thwepof-admin-settings-pro.php:155
+#: admin/class-thwepof-admin-settings-pro.php:156
 msgid "Number"
 msgstr ""
 
 #: admin/class-thwepof-admin-form-field.php:30
-#: admin/class-thwepof-admin-settings-pro.php:154
+#: admin/class-thwepof-admin-settings-pro.php:155
 msgid "Telephone"
 msgstr ""
 
 #: admin/class-thwepof-admin-form-field.php:31
-#: admin/class-thwepof-admin-settings-pro.php:153
+#: admin/class-thwepof-admin-settings-pro.php:154
 msgid "Password"
 msgstr ""
 
 #: admin/class-thwepof-admin-form-field.php:32
 #: admin/class-thwepof-admin-form-field.php:56
-#: admin/class-thwepof-admin-settings-pro.php:156
+#: admin/class-thwepof-admin-settings-pro.php:157
 msgid "Email"
 msgstr ""
 
@@ -72,27 +72,27 @@ msgid "Url"
 msgstr ""
 
 #: admin/class-thwepof-admin-form-field.php:34
-#: admin/class-thwepof-admin-settings-pro.php:159
+#: admin/class-thwepof-admin-settings-pro.php:160
 msgid "Slider/Range"
 msgstr ""
 
 #: admin/class-thwepof-admin-form-field.php:35
-#: admin/class-thwepof-admin-settings-pro.php:158
+#: admin/class-thwepof-admin-settings-pro.php:159
 msgid "Textarea"
 msgstr ""
 
 #: admin/class-thwepof-admin-form-field.php:36
-#: admin/class-thwepof-admin-settings-pro.php:162
+#: admin/class-thwepof-admin-settings-pro.php:163
 msgid "Select"
 msgstr ""
 
 #: admin/class-thwepof-admin-form-field.php:37
-#: admin/class-thwepof-admin-settings-pro.php:164
+#: admin/class-thwepof-admin-settings-pro.php:165
 msgid "Checkbox"
 msgstr ""
 
 #: admin/class-thwepof-admin-form-field.php:38
-#: admin/class-thwepof-admin-settings-pro.php:165
+#: admin/class-thwepof-admin-settings-pro.php:166
 msgid "Checkbox Group"
 msgstr ""
 
@@ -101,7 +101,7 @@ msgid "Radio Button"
 msgstr ""
 
 #: admin/class-thwepof-admin-form-field.php:40
-#: admin/class-thwepof-admin-settings-pro.php:166
+#: admin/class-thwepof-admin-settings-pro.php:167
 msgid "Date Picker"
 msgstr ""
 
@@ -110,12 +110,12 @@ msgid "Colorpicker"
 msgstr ""
 
 #: admin/class-thwepof-admin-form-field.php:42
-#: admin/class-thwepof-admin-settings-pro.php:160
+#: admin/class-thwepof-admin-settings-pro.php:161
 msgid "Switch"
 msgstr ""
 
 #: admin/class-thwepof-admin-form-field.php:43
-#: admin/class-thwepof-admin-settings-pro.php:174
+#: admin/class-thwepof-admin-settings-pro.php:175
 msgid "Heading"
 msgstr ""
 
@@ -124,7 +124,7 @@ msgid "Paragraph"
 msgstr ""
 
 #: admin/class-thwepof-admin-form-field.php:45
-#: admin/class-thwepof-admin-settings-pro.php:177
+#: admin/class-thwepof-admin-settings-pro.php:178
 msgid "Separator"
 msgstr ""
 
@@ -703,7 +703,7 @@ msgid "Your changes were not saved due to no fields found."
 msgstr ""
 
 #: admin/class-thwepof-admin-settings-pro.php:83
-#: admin/class-thwepof-admin-settings-pro.php:350
+#: admin/class-thwepof-admin-settings-pro.php:352
 msgid "Get Pro"
 msgstr ""
 
@@ -711,52 +711,56 @@ msgstr ""
 msgid "Try Demo"
 msgstr ""
 
-#: admin/class-thwepof-admin-settings-pro.php:157
+#: admin/class-thwepof-admin-settings-pro.php:158
 msgid "URL"
 msgstr ""
 
-#: admin/class-thwepof-admin-settings-pro.php:161
+#: admin/class-thwepof-admin-settings-pro.php:162
 msgid "Radio"
 msgstr ""
 
-#: admin/class-thwepof-admin-settings-pro.php:163
+#: admin/class-thwepof-admin-settings-pro.php:164
 msgid "Multiselect "
 msgstr ""
 
-#: admin/class-thwepof-admin-settings-pro.php:167
+#: admin/class-thwepof-admin-settings-pro.php:168
 msgid "Time Picker"
 msgstr ""
 
-#: admin/class-thwepof-admin-settings-pro.php:168
+#: admin/class-thwepof-admin-settings-pro.php:169
 msgid "Date & Time Range Picker"
 msgstr ""
 
-#: admin/class-thwepof-admin-settings-pro.php:169
+#: admin/class-thwepof-admin-settings-pro.php:170
 msgid "Color Picker"
 msgstr ""
 
-#: admin/class-thwepof-admin-settings-pro.php:170
+#: admin/class-thwepof-admin-settings-pro.php:171
 msgid "Color Palette"
 msgstr ""
 
-#: admin/class-thwepof-admin-settings-pro.php:171
+#: admin/class-thwepof-admin-settings-pro.php:172
 msgid "Image Group"
 msgstr ""
 
-#: admin/class-thwepof-admin-settings-pro.php:172
+#: admin/class-thwepof-admin-settings-pro.php:173
 msgid "Product Group"
 msgstr ""
 
-#: admin/class-thwepof-admin-settings-pro.php:173
+#: admin/class-thwepof-admin-settings-pro.php:174
 msgid "File Upload"
 msgstr ""
 
-#: admin/class-thwepof-admin-settings-pro.php:175
+#: admin/class-thwepof-admin-settings-pro.php:176
 msgid "Paragraph/Label"
 msgstr ""
 
-#: admin/class-thwepof-admin-settings-pro.php:176
+#: admin/class-thwepof-admin-settings-pro.php:177
 msgid "HTML"
+msgstr ""
+
+#: admin/class-thwepof-admin-settings-pro.php:179
+msgid "Label swatches"
 msgstr ""
 
 #: admin/class-thwepof-admin-settings.php:32
