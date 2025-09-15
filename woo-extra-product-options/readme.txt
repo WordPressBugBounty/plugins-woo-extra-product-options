@@ -5,7 +5,7 @@ Tags:  extra product options, product addons, woocommerce product addons, woocom
 Requires at least: 4.9
 Tested up to: 6.8
 Requires PHP: 5.6
-Stable tag: 3.3.2
+Stable tag: 3.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -302,7 +302,5 @@ Yes, it is compatible with Astra, Storefront. Also compatible with Avada, divi b
 
 == Changelog ==
 
-= 3.3.2 =
-* Added new field type **Time Picker**.
-* Added WooCommerce 9.8 compatibility.
-* Added WordPress 6.8 compatibility.
+= 3.3.3 =
+* Added WooCommerce 10.1 compatibility.

@@ -539,16 +539,18 @@ class THWEPOF_Public {
 	public function validate_input_field_maxlength($passed, $field, $value){
 		$field_label = $field->get_property('title');
 		$maxlength = absint($field->get_property('maxlength'));
-		$minlegth = absint($field->get_property('minlength'));
-		$word_count = strlen($value);
+		$minlength = absint($field->get_property('minlength'));
+		$input_value = is_string($value) ? $value : '';
+		$word_count = strlen($input_value);
+		$word_count  = absint( apply_filters( 'thwepof_input_word_count', $word_count, $input_value ) );
 
 		if($maxlength && $word_count > $maxlength){
 			/* translators: %d: maximum length of value */
 			THWEPOF_Utils::wcpf_add_error('<strong>'. wp_kses_post($field_label) .':</strong> '. sprintf(__('The entered value exceeds the maximum length allowed for the field. The maximum number of characters allowed is %d.', 'woo-extra-product-options'), $maxlength));
 				$passed = false;
-		}else if($minlegth && $word_count < $minlegth){
+		}else if($minlength && $word_count < $minlength){
 			/* translators: %d: minimum lenght of value */
-			THWEPOF_Utils::wcpf_add_error('<strong>'. wp_kses_post($field_label) .':</strong> '. sprintf(__('The entered value less than the minimum length required for the field. The minimum number of character required is %d.', 'woo-extra-product-options'), $minlegth));
+			THWEPOF_Utils::wcpf_add_error('<strong>'. wp_kses_post($field_label) .':</strong> '. sprintf(__('The entered value less than the minimum length required for the field. The minimum number of character required is %d.', 'woo-extra-product-options'), $minlength));
 				$passed = false;
 		}
 
