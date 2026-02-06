@@ -50,6 +50,11 @@ class THWEPOF {
 				'includes/utils/class-thwepof-utils-section.php',
 				'includes/class-thwepof-data.php',
 
+				'includes/themehigh_dashboard/class-themehigh-admin-free-plugins-page.php',
+				'includes/themehigh_dashboard/class-themehigh-admin-menu.php',
+				'includes/themehigh_dashboard/class-themehigh-admin-notification.php',
+				'includes/themehigh_dashboard/class-themehigh-admin-plugin-utils.php',
+
 				/*'classes/fe/rules/class-wepof-condition.php',
 				'classes/fe/rules/class-wepof-condition-set.php',
 				'classes/fe/rules/class-wepof-rule.php',
@@ -145,27 +150,77 @@ class THWEPOF {
 			$this->wepof_public = new THWEPOF_Public();
 		}else if(is_admin()){
 			$this->wepof_admin = THWEPOF_Admin_Settings_General::instance();
+			// redirection after activation
+			add_action('admin_init', [$this, 'thwepof_redirect_after_activation']);
+
+			/**
+			 * Register plugin to add to menu
+			 */
+			ThemeHigh_Admin_Menu::register_plugin(
+				__('Extra Product Option', 'woo-extra-product-options'), 
+				__('Extra Product Option', 'woo-extra-product-options'), 
+				'thwepof_extra_product_options',
+				array($this, 'output_settings'),
+				THWEPOF_Utils::wepo_capability(),
+				4 // order of the menu item
+			);
 		}
 
 		//$this->may_copy_older_version_settings();
 	}
 
+	/**
+	 * Plugin redirection after activation
+	 */
+	public function thwepof_redirect_after_activation() {
+		if (get_option('thwepof_do_activation_redirect')) {
+			delete_option('thwepof_do_activation_redirect');
+
+			if (is_network_admin() || isset($_GET['activate-multi']) || defined('WP_CLI')) {
+				return;
+			}
+
+			wp_safe_redirect(admin_url('admin.php?page=thwepof_extra_product_options'));
+			exit;
+		}
+	}
+
 	public function admin_menu() {
 		$capability = THWEPOF_Utils::wepo_capability();
-		$this->screen_id = add_submenu_page('edit.php?post_type=product', __('WooCommerce Extra Product Option', 'woo-extra-product-options'),
-		__('Extra Product Option', 'woo-extra-product-options'), $capability, 'thwepof_extra_product_options', array($this, 'output_settings'));
+		// redirecting from old sub menu...
+		$this->screen_id = add_submenu_page(
+			'edit.php?post_type=product', 
+			__('WooCommerce Extra Product Option', 'woo-extra-product-options'), 
+			__('Extra Product Option', 'woo-extra-product-options'), 
+			$capability, 
+			'thwepof_extra_product_options_redirect', 
+			[$this, 'redirect_to_themehigh_menu']
+		);
 
-		add_action('admin_print_scripts-'. $this->screen_id, array($this, 'enqueue_admin_scripts'));
+		add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
 	}
 
 	public function add_screen_id($ids){
 		$ids[] = 'product_page_thwepof_extra_product_options';
 		$ids[] = strtolower(__('Product', 'woocommerce')) .'_page_thwepof_extra_product_options';
+		$ids[] = 'themehigh_page_thwepof_extra_product_options'; // ThemeHigh menu screen ID
+		$ids[] = 'product_page_thwepof_extra_product_options_redirect'; // Redirect page screen ID
+		
+		// ThemeHigh menu pages
+		$ids[] = 'themehigh_page_themehigh-free-plugins';
+		$ids[] = 'themehigh_page_themehigh-notifications'; // Notifications admin page – planned for future implementation
+		
+		// Allow filtering for custom pages that should get WooCommerce admin styles
+		$custom_screen_ids = apply_filters('thwepof_woocommerce_screen_ids', array());
+		if (!empty($custom_screen_ids)) {
+			$ids = array_merge($ids, $custom_screen_ids);
+		}
+		
 		return $ids;
 	}
 
 	public function add_settings_link($links) {
-		$settings_link = '<a href="'.esc_url(admin_url('edit.php?post_type=product&page=thwepof_extra_product_options')).'">'. __('Settings') .'</a>';
+		$settings_link = '<a href="'.esc_url(admin_url('admin.php?page=thwepof_extra_product_options')).'">'. __('Settings') .'</a>';
 		array_unshift($links, $settings_link);
 		$premium_link = '<a href="https://www.themehigh.com/product/woocommerce-extra-product-options?utm_source=free&utm_medium=plugin_action_link&utm_campaign=wepo_upgrade_link" style="color:green; font-weight:bold" target="_blank">'. __('Get Pro') .'</a>';
 		array_push($links, $premium_link);
@@ -198,14 +253,78 @@ class THWEPOF {
 		// echo '</div>';
 	}
 
-	public function enqueue_admin_scripts() {
+	/**
+	 * Redirecting 'Extra Product Option' page to the new 'Themehigh' menu structure for better navigation consistency
+	 */
+	public function redirect_to_themehigh_menu() {
+		// wp_safe_redirect(admin_url('admin.php?page=thwepof_extra_product_options'));
+		// exit;
+	
+		echo '<div class="thwepo-wrap new-menu-redirection">';
+		echo '<div class="container">';
+		echo '<img class="new-menu-img" src="' . THWEPOF_URL . 'admin/assets/images/menu-new-wepo.png" alt="wepo-new-menu">';
+		echo '<h3>Heads up!</h3>';
+		echo '<h3>We\'ve moved WooCommerce Extra Product Options from here!</h3>';
+		echo '<div class="new-menu-desc">
+				<p class="new-menu-instruction">Find WooCommerce Extra Product Options under the Themehigh tab now.</p>
+			  	<p class="new-menu-instruction">Go to <strong>Themehigh &gt; Extra Product Option</strong> for settings.</p>
+			  </div>';
+		echo '<a href="' . admin_url('admin.php?page=thwepof_extra_product_options') . '" class="redirect-button">
+			  	<img class="redirect-icon" src="' . THWEPOF_URL . 'admin/assets/images/redirect-icon.svg" alt="redirect">
+			  	Redirect
+			  </a>';
+		echo '</div>';
+		echo '</div>';
+	}
+
+	public function enqueue_admin_scripts($hook) {
+		$screen = get_current_screen();
+		if (!$screen) {
+			return;
+		}
+
+		// Define the screen IDs where scripts should be loaded
+		$screen_ids = array(
+			// Main plugin settings page
+			'themehigh_page_thwepof_extra_product_options', // Main settings page (via ThemeHigh menu)
+			'product_page_thwepof_extra_product_options',    // Legacy screen ID
+			'product_page_thwepof_extra_product_options_redirect', // Redirect page
+			
+			// ThemeHigh menu pages
+			'themehigh_page_themehigh-free-plugins', // Free Plugins page
+			'themehigh_page_themehigh-notifications', // Notifications page
+		);
+
+		// Allow filtering of screen IDs (for custom pages)
+		$screen_ids = apply_filters('thwepof_admin_screen_ids', $screen_ids);
+
+		// Check if current screen is in the allowed list
+		if (!in_array($screen->id, $screen_ids)) {
+			return;
+		}
+
 		$debug_mode = apply_filters('thwepof_debug_mode', false);
 		$suffix = $debug_mode ? '' : '.min';
 
-		wp_enqueue_style (array('woocommerce_admin_styles', 'jquery-ui-style'));
-		wp_enqueue_style ('thwepof-admin-style', THWEPOF_URL.'admin/assets/css/thwepof-admin'. $suffix .'.css', THWEPOF_VERSION);
-		wp_enqueue_script('thwepof-admin-script', THWEPOF_URL.'admin/assets/js/thwepof-admin'. $suffix .'.js',
-		array('jquery', 'jquery-ui-sortable', 'jquery-tiptip', 'wc-enhanced-select', 'selectWoo'), THWEPOF_VERSION, false);
+		// Enqueue WooCommerce admin styles
+		wp_enqueue_style('woocommerce_admin_styles');
+		
+		// Enqueue plugin admin styles
+		wp_enqueue_style(
+			'thwepof-admin-style',
+			THWEPOF_URL . 'admin/assets/css/thwepof-admin' . $suffix . '.css',
+			array('woocommerce_admin_styles'),
+			THWEPOF_VERSION
+		);
+
+		// Enqueue plugin admin scripts
+		wp_enqueue_script(
+			'thwepof-admin-script',
+			THWEPOF_URL . 'admin/assets/js/thwepof-admin' . $suffix . '.js',
+			array('jquery', 'jquery-ui-sortable', 'jquery-tiptip', 'wc-enhanced-select', 'selectWoo'),
+			THWEPOF_VERSION,
+			false
+		);
 
 		$wepof_var = array(
 			'tag'                 => __('Tag', 'woo-extra-product-options'),
@@ -335,7 +454,7 @@ class THWEPOF {
 	}
 
 	public function secret_discount_popup(){
-		$admin_url = 'edit.php?post_type=product&page=thwepof_extra_product_options';
+		$admin_url = 'admin.php?page=thwepof_extra_product_options';
         $dismiss_url = $admin_url . '&thwepof_discount_popup_dismiss=true&thwepof_discount_popup_nonce=' . wp_create_nonce( 'thwepof_discount_popup_security');
 
 		$url = "https://www.themehigh.com/?edd_action=add_to_cart&download_id=17&cp=lyCDSy_wepo&utm_source=free&utm_medium=premium_tab&utm_campaign=wepo_upgrade_link";

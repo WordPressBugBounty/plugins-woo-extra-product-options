@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Extra product options For WooCommerce | Custom Product Addons and Fields plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Extra product options For WooCommerce | Custom Product Addons and Fields 3.3.3\n"
+"Project-Id-Version: Extra product options For WooCommerce | Custom Product Addons and Fields 3.3.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/woo-extra-product-options\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-09-13T17:07:57+00:00\n"
+"POT-Creation-Date: 2025-12-24T05:45:41+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: woo-extra-product-options\n"
@@ -451,27 +451,27 @@ msgid "Show if all below conditions are met."
 msgstr ""
 
 #: admin/class-thwepof-admin-form.php:310
-#: includes/class-thwepof.php:214
+#: includes/class-thwepof.php:333
 msgid "Product"
 msgstr ""
 
 #: admin/class-thwepof-admin-form.php:311
-#: includes/class-thwepof.php:215
+#: includes/class-thwepof.php:334
 msgid "Category"
 msgstr ""
 
 #: admin/class-thwepof-admin-form.php:312
-#: includes/class-thwepof.php:211
+#: includes/class-thwepof.php:330
 msgid "Tag"
 msgstr ""
 
 #: admin/class-thwepof-admin-form.php:318
-#: includes/class-thwepof.php:212
+#: includes/class-thwepof.php:331
 msgid "Equals to/ In"
 msgstr ""
 
 #: admin/class-thwepof-admin-form.php:319
-#: includes/class-thwepof.php:213
+#: includes/class-thwepof.php:332
 msgid "Not Equals to/ Not in"
 msgstr ""
 
@@ -613,7 +613,7 @@ msgid "Product fields successfully reset."
 msgstr ""
 
 #: admin/class-thwepof-admin-settings-general.php:155
-#: includes/class-thwepof.php:221
+#: includes/class-thwepof.php:340
 msgid "Edit Section"
 msgstr ""
 
@@ -635,7 +635,7 @@ msgid "Yes"
 msgstr ""
 
 #: admin/class-thwepof-admin-settings-general.php:294
-#: includes/class-thwepof.php:218
+#: includes/class-thwepof.php:337
 msgid "Edit Field"
 msgstr ""
 
@@ -801,113 +801,115 @@ msgstr ""
 msgid "Nah, Never"
 msgstr ""
 
-#: includes/class-thwepof.php:155
-msgid "WooCommerce Extra Product Option"
-msgstr ""
-
-#: includes/class-thwepof.php:156
+#: includes/class-thwepof.php:160
+#: includes/class-thwepof.php:161
+#: includes/class-thwepof.php:194
 msgid "Extra Product Option"
 msgstr ""
 
-#: includes/class-thwepof.php:219
+#: includes/class-thwepof.php:193
+msgid "WooCommerce Extra Product Option"
+msgstr ""
+
+#: includes/class-thwepof.php:338
 msgid "New Field"
 msgstr ""
 
-#: includes/class-thwepof.php:220
+#: includes/class-thwepof.php:339
 msgid "New Section"
 msgstr ""
 
-#: includes/class-thwepof.php:448
+#: includes/class-thwepof.php:567
 msgid "Quick Feedback"
 msgstr ""
 
-#: includes/class-thwepof.php:453
-#: includes/class-thwepof.php:484
+#: includes/class-thwepof.php:572
+#: includes/class-thwepof.php:603
 msgid "Get Support"
 msgstr ""
 
-#: includes/class-thwepof.php:457
+#: includes/class-thwepof.php:576
 msgid "If you have a moment, please let us know why you want to deactivate this plugin"
 msgstr ""
 
-#: includes/class-thwepof.php:476
+#: includes/class-thwepof.php:595
 msgid "This form is only for getting your valuable feedback. We do not collect your personal data. To know more read our "
 msgstr ""
 
-#: includes/class-thwepof.php:476
+#: includes/class-thwepof.php:595
 msgid "Privacy Policy"
 msgstr ""
 
-#: includes/class-thwepof.php:480
+#: includes/class-thwepof.php:599
 msgid "Skip & Deactivate"
 msgstr ""
 
-#: includes/class-thwepof.php:486
+#: includes/class-thwepof.php:605
 msgid "Submit and Deactivate"
 msgstr ""
 
-#: includes/class-thwepof.php:487
+#: includes/class-thwepof.php:606
 msgid "Cancel"
 msgstr ""
 
-#: includes/class-thwepof.php:709
+#: includes/class-thwepof.php:828
 msgid "Deactivate and "
 msgstr ""
 
-#: includes/class-thwepof.php:711
+#: includes/class-thwepof.php:830
 msgid "leave a review"
 msgstr ""
 
-#: includes/class-thwepof.php:715
+#: includes/class-thwepof.php:834
 msgid "Upgraded"
 msgstr ""
 
-#: includes/class-thwepof.php:786
+#: includes/class-thwepof.php:905
 msgid "Upgraded to premium."
 msgstr ""
 
-#: includes/class-thwepof.php:793
+#: includes/class-thwepof.php:912
 msgid "A specific feature is missing"
 msgstr ""
 
-#: includes/class-thwepof.php:795
+#: includes/class-thwepof.php:914
 msgid "Type in the feature"
 msgstr ""
 
-#: includes/class-thwepof.php:800
+#: includes/class-thwepof.php:919
 msgid "Found an error in the plugin/ Plugin was not working"
 msgstr ""
 
-#: includes/class-thwepof.php:802
+#: includes/class-thwepof.php:921
 msgid "Specify the issue"
 msgstr ""
 
-#: includes/class-thwepof.php:807
+#: includes/class-thwepof.php:926
 msgid "It was hard to use"
 msgstr ""
 
-#: includes/class-thwepof.php:809
+#: includes/class-thwepof.php:928
 msgid "How can we improve your experience?"
 msgstr ""
 
-#: includes/class-thwepof.php:814
+#: includes/class-thwepof.php:933
 msgid "I found a better Plugin"
 msgstr ""
 
-#: includes/class-thwepof.php:816
-#: includes/class-thwepof.php:830
+#: includes/class-thwepof.php:935
+#: includes/class-thwepof.php:949
 msgid "Could you please mention the plugin?"
 msgstr ""
 
-#: includes/class-thwepof.php:828
+#: includes/class-thwepof.php:947
 msgid "It’s a temporary deactivation - I’m troubleshooting an issue"
 msgstr ""
 
-#: includes/class-thwepof.php:835
+#: includes/class-thwepof.php:954
 msgid "Not mentioned here"
 msgstr ""
 
-#: includes/class-thwepof.php:837
+#: includes/class-thwepof.php:956
 msgid "Kindly tell us your reason, so that we can improve"
 msgstr ""
 

@@ -350,7 +350,7 @@ abstract class THWEPOF_Admin_Settings{
 	}
 
 	public function get_admin_url($tab = false, $section = false){
-		$url = 'edit.php?post_type=product&page=thwepof_extra_product_options';
+		$url = 'admin.php?page=thwepof_extra_product_options';
 		if($tab && !empty($tab)){
 			$url .= '&tab='. $tab;
 		}

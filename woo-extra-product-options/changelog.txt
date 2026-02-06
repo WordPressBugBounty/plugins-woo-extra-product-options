@@ -1,5 +1,10 @@
 === Changelog ===
 
+= 3.3.4 =
+* Added WooCommerce 10.4 compatibility.
+* Added WordPress 6.9 compatibility.
+* Introduced a new Themehigh menu in the WordPress backend and moved the “Extra Product Options” menu under it.
+
 = 3.3.3 =
 * Added WooCommerce 10.1 compatibility.
 

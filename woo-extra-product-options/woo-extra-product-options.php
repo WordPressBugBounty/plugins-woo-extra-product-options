@@ -3,14 +3,14 @@
  * Plugin Name: Extra product options For WooCommerce | Custom Product Addons and Fields
  * Description: Add extra product options in product page.
  * Author:      ThemeHigh
- * Version:     3.3.3
+ * Version:     3.3.4
  * Author URI:  https://www.themehigh.com
  * Plugin URI:  https://www.themehigh.com
  * Text Domain: woo-extra-product-options
  * Domain Path: /languages
  * Requires Plugins: woocommerce
  * WC requires at least: 6.0.0
- * WC tested up to: 10.1
+ * WC tested up to: 10.4
  */
 
 if(!defined('ABSPATH')){ exit; }
@@ -32,10 +32,21 @@ if(is_woocommerce_active()) {
 
 			public function __construct(){
 				add_action('init', array($this, 'init'));
+				// Register activation hook
+				register_activation_hook(__FILE__, array($this, 'activate'));
+			}
+
+			/**
+			 * Plugin activation hook
+			 * Sets a flag to redirect to settings page after activation
+			 */
+			public function activate() {
+				// Set flag for redirect after activation
+				add_option('thwepof_do_activation_redirect', true);
 			}
 
 			public function init() {
-				define('THWEPOF_VERSION', '3.3.3');
+				define('THWEPOF_VERSION', '3.3.4');
 				!defined('THWEPOF_BASE_NAME') && define('THWEPOF_BASE_NAME', plugin_basename( __FILE__ ));
 				!defined('THWEPOF_PATH') && define('THWEPOF_PATH', plugin_dir_path( __FILE__ ));
 				!defined('THWEPOF_URL') && define('THWEPOF_URL', plugins_url( '/', __FILE__ ));

@@ -3,9 +3,9 @@ Contributors: ThemeHigh
 Donate link: https://themehigh.com/
 Tags:  extra product options, product addons, woocommerce product addons, woocommerce product fields, product options
 Requires at least: 4.9
-Tested up to: 6.8
+Tested up to: 6.9
 Requires PHP: 5.6
-Stable tag: 3.3.3
+Stable tag: 3.3.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -302,5 +302,7 @@ Yes, it is compatible with Astra, Storefront. Also compatible with Avada, divi b
 
 == Changelog ==
 
-= 3.3.3 =
-* Added WooCommerce 10.1 compatibility.
+= 3.3.4 =
+* Added WooCommerce 10.4 compatibility.
+* Added WordPress 6.9 compatibility.
+* Introduced a new Themehigh menu in the WordPress backend and moved the “Extra Product Options” menu under it.
