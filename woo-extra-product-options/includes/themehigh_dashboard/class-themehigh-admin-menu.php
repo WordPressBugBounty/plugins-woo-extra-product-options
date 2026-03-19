@@ -24,7 +24,7 @@ final class ThemeHigh_Admin_Menu {
     public const FREE_PLUGINS_SLUG = 'themehigh-free-plugins';
     public const PREMIUM_PLUGINS_SLUG = 'themehigh-premium-plugins';
     public const PREMIUM_PLUGINS_URL = 'https://www.themehigh.com/plugins/';
-    public const TEXT_DOMAIN = 'themehigh';
+    public const TEXT_DOMAIN = 'woo-extra-product-options';
     public const CACHE_EXPIRATION = 12 * HOUR_IN_SECONDS;
 
     /**
@@ -118,8 +118,8 @@ final class ThemeHigh_Admin_Menu {
         $callback = $first_plugin['callback'] ?? '__return_empty_string';
 
         add_menu_page(
-            __('Themehigh', self::TEXT_DOMAIN),
-            __('Themehigh', self::TEXT_DOMAIN),
+            __('Themehigh', 'woo-extra-product-options'),
+            __('Themehigh', 'woo-extra-product-options'),
             self::DEFAULT_CAPABILITY,
             self::TOP_LEVEL_SLUG,
             $callback,
@@ -176,8 +176,8 @@ final class ThemeHigh_Admin_Menu {
     private function add_free_plugins_submenu(): void {
         add_submenu_page(
             self::TOP_LEVEL_SLUG,
-            __('Free Plugins', self::TEXT_DOMAIN),
-            __('Free Plugins', self::TEXT_DOMAIN),
+            __('Free Plugins', 'woo-extra-product-options'),
+            __('Free Plugins', 'woo-extra-product-options'),
             self::DEFAULT_CAPABILITY,
             self::FREE_PLUGINS_SLUG,
             [ThemeHigh_Admin_Free_Plugins_Page::class, 'render']
@@ -190,8 +190,8 @@ final class ThemeHigh_Admin_Menu {
     private function add_premium_plugins_submenu(): void {
         add_submenu_page(
             self::TOP_LEVEL_SLUG,
-            __('Premium Plugins', self::TEXT_DOMAIN),
-            __('Premium Plugins', self::TEXT_DOMAIN),
+            __('Premium Plugins', 'woo-extra-product-options'),
+            __('Premium Plugins', 'woo-extra-product-options'),
             self::DEFAULT_CAPABILITY,
             self::PREMIUM_PLUGINS_SLUG,
             '__return_empty_string'
@@ -225,8 +225,8 @@ final class ThemeHigh_Admin_Menu {
         $svg_icon = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="14" fill="#ffb236" xmlns:v="https://vecta.io/nano"><path d="M7.32 10.871H2.404c-.52 0-.788-.207-.932-.727L.056 5.018c-.28-1.025.527-1.886 1.532-1.641l1.986.499c.113.03.173.008.245-.084L6.344.551c.571-.734 1.482-.735 2.051-.003l2.525 3.241c.07.09.127.119.243.088l1.927-.494c.987-.243 1.801.632 1.523 1.638l-1.426 5.123c-.147.526-.407.727-.931.727H7.32h0zm.01 3.128c-1.659 0-3.317.003-4.976-.002-.607-.002-1.002-.575-.801-1.145a.81.81 0 0 1 .761-.555l1.444-.002 8.489-.002c.276 0 .516.068.699.285a.83.83 0 0 1 .136.917c-.145.335-.412.503-.775.503-1.659-.001-3.317 0-4.976 0v-.001z"/></svg> <span></span>';
 
         $submenu[self::TOP_LEVEL_SLUG][$key][0] = $svg_icon . 
-            esc_html__('Premium Plugins', self::TEXT_DOMAIN) . 
-            ' <span class="screen-reader-text">(' . esc_html__('opens in a new tab', self::TEXT_DOMAIN) . ')</span>';
+            esc_html__('Premium Plugins', 'woo-extra-product-options') . 
+            ' <span class="screen-reader-text">(' . esc_html__('opens in a new tab', 'woo-extra-product-options') . ')</span>';
 
         $submenu[self::TOP_LEVEL_SLUG][$key][2] = self::PREMIUM_PLUGINS_URL;
         $submenu[self::TOP_LEVEL_SLUG][$key][4] = 'themehigh-premium-link';

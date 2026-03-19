@@ -119,19 +119,24 @@ class THWEPOF_Admin_Settings_Advanced extends THWEPOF_Admin_Settings{
 
 		$settings = array();
 		
-		foreach( $this->settings_fields as $name => $field ) {
-			$value = '';
+		foreach ( $this->settings_fields as $name => $field ) {
+			$i_name = 'i_' . $name;
 			
-			if($field['type'] === 'multiselect_grouped'){
-				$value = !empty( $_POST['i_'.$name] ) ? $_POST['i_'.$name] : '';
-				$value = is_array($value) ? implode(',', wc_clean(wp_unslash($value))) : wc_clean(wp_unslash($value));
+			// Check existence and get unslashed value
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized in subsequent lines
+			$raw_value = isset( $_POST[ $i_name ] ) ? wp_unslash( $_POST[ $i_name ] ) : '';
 
-			}else{
-				$value = !empty( $_POST['i_'.$name] ) ? $_POST['i_'.$name] : '';
-				$value = !empty($value) ? wc_clean( wp_unslash($value)) : '';
+			if ( $field['type'] === 'multiselect_grouped' ) {
+				// Sanitize (wc_clean handles arrays recursively)
+				$cleaned_value = wc_clean( $raw_value );
+				// Convert array to CSV string
+				$value = is_array( $cleaned_value ) ? implode( ',', $cleaned_value ) : $cleaned_value;
+			} else {
+				// Standard sanitization
+				$value = wc_clean( $raw_value );
 			}
 			
-			$settings[$name] = $value;
+			$settings[ $name ] = $value;
 		}
 				
 		$result = $this->save_advanced_settings($settings);
@@ -143,12 +148,15 @@ class THWEPOF_Admin_Settings_Advanced extends THWEPOF_Admin_Settings{
 	}
 	
 	private function render_content(){
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified in reset_settings
 		if(isset($_POST['reset_settings']))
 			$this->reset_settings();	
 			
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified in save_settings
 		if(isset($_POST['save_settings']))
 			$this->save_settings();
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified in save_plugin_settings
 		if(isset($_POST['save_plugin_settings'])) 
 			$result = $this->save_plugin_settings();
 			
@@ -170,8 +178,8 @@ class THWEPOF_Admin_Settings_Advanced extends THWEPOF_Admin_Settings{
                     </tbody>
                 </table> 
                 <p class="submit">
-					<input type="submit" name="save_settings" class="btn btn-small btn-primary" value="<?php _e('Save changes', 'woo-extra-product-options'); ?>">
-                    <input type="submit" name="reset_settings" class="btn btn-small" value="<?php _e('Reset to default','woo-extra-product-options'); ?>" 
+					<input type="submit" name="save_settings" class="btn btn-small btn-primary" value="<?php esc_attr_e('Save changes', 'woo-extra-product-options'); ?>">
+                    <input type="submit" name="reset_settings" class="btn btn-small" value="<?php esc_attr_e('Reset to default','woo-extra-product-options'); ?>" 
 					onclick="return confirm('Are you sure you want to reset to default settings? all your changes will be deleted.');">
 					<?php wp_nonce_field( 'update_advanced_settings', 'update_advanced_nonce' ); ?>
             	</p>
@@ -225,8 +233,10 @@ class THWEPOF_Admin_Settings_Advanced extends THWEPOF_Admin_Settings{
 		} 
 		
 		$plugin_settings = $this->prepare_plugin_settings();
-		if(isset($_POST['export_settings']))
-			echo $this->export_settings($plugin_settings);   
+		if(isset($_POST['export_settings'])) {
+			check_admin_referer( 'import_wepo_settings', 'import_wepo_nonce' );
+			echo wp_kses_post($this->export_settings($plugin_settings));   
+		}
 		
 		$imp_exp_fields = array(
 			'section_import_export' => array('title'=>__('Backup and Import Settings', 'woo-extra-product-options'), 'type'=>'separator', 'colspan'=>'3'),
@@ -250,7 +260,7 @@ class THWEPOF_Admin_Settings_Advanced extends THWEPOF_Admin_Settings{
 						<tr valign="top">
 							<td colspan="2">&nbsp;</td>
 							<td class="submit">
-								<input type="submit" name="save_plugin_settings" class="btn btn-small btn-primary" value="<?php _e('Import Settings', 'woo-extra-product-options'); ?>">
+								<input type="submit" name="save_plugin_settings" class="btn btn-small btn-primary" value="<?php esc_attr_e('Import Settings', 'woo-extra-product-options'); ?>">
 								<?php wp_nonce_field( 'import_wepo_settings', 'import_wepo_nonce' ); ?>
 								<!--<input type="submit" name="import_settings" class="button" value="Import Settings(CSV)">-->
 								<!--<input type="submit" name="export_settings" class="button" value="Export Settings(CSV)">-->
@@ -296,7 +306,7 @@ class THWEPOF_Admin_Settings_Advanced extends THWEPOF_Admin_Settings{
 
 			if ($settings === false) {
 			    // Failed to unserialize the data
-			    $error = error_get_last();
+				$error = error_get_last();
 			    $error_message = isset($error['message']) ? $error['message'] : 'Unknown error';
 			    error_log('Unserialize error: ' . $error_message);
 			    $this->print_notices(__('Failed to unserialize import settings data. Please check the data and try again.', 'woo-extra-product-options'), 'error', false);
@@ -305,7 +315,7 @@ class THWEPOF_Admin_Settings_Advanced extends THWEPOF_Admin_Settings{
 
 			// Check if the unserialized data is an array
 			if (!is_array($settings)) {
-			    error_log('Unserialized data is not an array: ' . print_r($settings, true));
+				error_log('Unserialized data is not an array: ' . print_r($settings, true));
 			    $this->print_notices(__('Imported settings data is not in the expected format. Please check the data and try again.', 'woo-extra-product-options'), 'error', false);
 			    return false;
 			}
@@ -357,7 +367,7 @@ class THWEPOF_Admin_Settings_Advanced extends THWEPOF_Admin_Settings{
 		header("Cache-Control: private", false);
 		header("Content-Type: text/csv");
 		header("Content-Disposition: attachment; filename=\"wcfe-checkout-field-editor-settings.csv\";" );
-		echo $settings;	
+		echo esc_html($settings);	
         ob_flush();     
      	exit; 		
 	}
@@ -380,7 +390,7 @@ class THWEPOF_Admin_Settings_Advanced extends THWEPOF_Admin_Settings{
 	public function render_form_elm_row_title($title=''){
 		?>
 		<tr>
-			<td colspan="3" class="section-title" ><?php echo $title; ?></td>
+			<td colspan="3" class="section-title" ><?php echo esc_html($title); ?></td>
 		</tr>
 		<?php
 	}

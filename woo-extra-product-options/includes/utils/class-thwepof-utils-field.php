@@ -111,20 +111,20 @@ class THWEPOF_Utils_Field {
 	}
 
 	public static function add_wpml_support($field){
-		THWEPOF_Utils::wpml_register_string('Field Title - '.$field->name, $field->title );
-		THWEPOF_Utils::wpml_register_string('Field Placeholder - '.$field->name, $field->placeholder );
+		THWEPOF_i18n::wpml_register_string('Field Title - '.$field->name, $field->title );
+		THWEPOF_i18n::wpml_register_string('Field Placeholder - '.$field->name, $field->placeholder );
 		
 		$options = $field->get_property('options');
 		if($options && is_array($options)){
 			foreach($options as $key => $option_txt){
-				THWEPOF_Utils::wpml_register_string('Field Option - '.$field->name.' - '.$key, $option_txt );
+				THWEPOF_i18n::wpml_register_string('Field Option - '.$field->name.' - '.$key, $option_txt );
 			}
 		}
 
 		$field_type = $field->get_property('type');
 		if($field_type === 'heading' || $field_type === 'paragraph'){
 			$value = $field->get_property('value');
-			THWEPOF_Utils::wpml_register_string('Field Value - '.$field->name, $value );
+			THWEPOF_i18n::wpml_register_string('Field Value - '.$field->name, $value );
 		}
 	}
 
@@ -229,6 +229,7 @@ class THWEPOF_Utils_Field {
 		$name = $field->get_property('name');
 		$field_type = $field->get_property('type');
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Field value repopulation, sanitized via wc_clean
 		$value = isset($_POST[$name]) ? wc_clean(wp_unslash($_POST[$name])) : $field->get_property('value');
 		// if($value){
 		// 	$value = is_array($value) ? $value : trim(stripslashes($value));
@@ -370,7 +371,7 @@ class THWEPOF_Utils_Field {
 			$title_style = $field->get_property('title_color') ? 'style="color:'.esc_attr($field->get_property('title_color')).';"' : '';
 			
 			$title_html .= '<'.$title_type.' class="label-tag '.esc_attr($title_class).'" '.$title_style.'>';
-			$title_html .= wp_kses_post(__($field->get_property('title'), 'woo-extra-product-options'));
+			$title_html .= wp_kses_post(THWEPOF_i18n::translate($field->get_property('title'), 'Field Title - ' . $field->get_property('name')));
 			$title_html .= '</'.$title_type.'>';
 		}
 		
@@ -381,14 +382,14 @@ class THWEPOF_Utils_Field {
 	private static function prepare_field_props($field, $name, $value){
 		$class = array();
 		global $thwepof_fid_rndm_vl;
-		$thwepof_fid_rndm_vl = rand(111,999);
+		$thwepof_fid_rndm_vl = wp_rand(111,999);
 		$thwepof_fid_rndm_vl = apply_filters('thwepof_field_id_random_value', $thwepof_fid_rndm_vl );
 		$type  = $field->get_property('type');
 		$props = 'id="'. esc_attr($name) .''.esc_attr($thwepof_fid_rndm_vl).'" name="'. esc_attr($name) .'"';
 
 		$placeholder = $field->get_property('placeholder');
 		if($placeholder){
-			$props .= ' placeholder="'.esc_attr__($placeholder, 'woo-extra-product-options').'"';
+			$props .= ' placeholder="'.esc_attr(THWEPOF_i18n::translate($placeholder, 'Field Placeholder - ' . $name)).'"';
 		}
 
 		if($type != 'textarea'){
@@ -513,6 +514,7 @@ class THWEPOF_Utils_Field {
 		$props = self::prepare_field_props($field, $name, $value);
 
 		$view_password = $field->get_property('view_password');
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy hook compatibility
 		if($view_password && apply_filters('thwepo_display_password_view_option', true)){
 			$input_html = '<div class="thwepof-password-field">';
 			$input_html .= '<input type="password" '.$props.' >';
@@ -527,6 +529,7 @@ class THWEPOF_Utils_Field {
 	}
 
 	private static function get_html_textarea($name, $field, $section, $value){
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Field value repopulation
 		$value = isset($_POST[$name]) ? sanitize_textarea_field(wp_unslash($_POST[$name])) : $field->get_property('value');
 		$value = is_array($value) ? '' : $value;
 		$minlength = $field->get_property('minlength');
@@ -549,10 +552,10 @@ class THWEPOF_Utils_Field {
 		$placeholder = $field->get_property('placeholder');
 
 		$input_html = '<select '.$props.' >';
-		$input_html .= $placeholder ? '<option value="">'. esc_attr__($placeholder, 'woo-extra-product-options') .'</option>' : '';
+		$input_html .= $placeholder ? '<option value="">'. esc_attr(THWEPOF_i18n::translate($placeholder, 'Field Placeholder - ' . $name)) .'</option>' : '';
 		foreach($field->get_property('options') as $option_key => $option_text){
 			$selected = ($option_text === $value) ? 'selected' : '';
-			$input_html .= '<option value="'.esc_attr($option_text).'" '.$selected.'>'.esc_attr__($option_text, 'woo-extra-product-options').'</option>';
+			$input_html .= '<option value="'.esc_attr($option_text).'" '.$selected.'>'.esc_attr(THWEPOF_i18n::translate($option_text, 'Field Option - ' . $name . '_' . $option_key)).'</option>';
 		}
 		$input_html .= '</select>';
 
@@ -564,7 +567,9 @@ class THWEPOF_Utils_Field {
 		$checked = $field->get_property('checked') ? 'checked' : '';
 		$value = empty($value) ? '1' : $value;
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified by WooCommerce
 		if(isset($_POST[$name])){
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified by WooCommerce
 			$checked = isset($_POST[$name]) && $_POST[$name] == $value ? 'checked=checked' : 0;
 		}
 
@@ -661,7 +666,7 @@ class THWEPOF_Utils_Field {
 	private static function get_html_heading($name, $field, $section, $value){
 		$elm_type = $field->get_property('title_type') ? $field->get_property('title_type') : 'h1';
 		$props = self::prepare_field_props($field, $name, false);
-		$input_html  = '<'.$elm_type.' '.$props.'>'. wp_kses_post(__($value, 'woo-extra-product-options')) .'</'.$elm_type.'>';
+		$input_html  = '<'.$elm_type.' '.$props.'>'. wp_kses_post(THWEPOF_i18n::translate($value, 'Field Value - ' . $name)) .'</'.$elm_type.'>';
 
 		$html = self::prepare_field_html_input($field, $section, $input_html);
 		return $html;
@@ -670,7 +675,7 @@ class THWEPOF_Utils_Field {
 	private static function get_html_paragraph($name, $field, $section, $value){
 		$elm_type = $field->get_property('title_type') ? $field->get_property('title_type') : 'p';
 		$props = self::prepare_field_props($field, $name, false);
-		$input_html  = '<'.$elm_type.' '.$props.'>'. wp_kses_post(__($value, 'woo-extra-product-options')) .'</'.$elm_type.'>';
+		$input_html  = '<'.$elm_type.' '.$props.'>'. wp_kses_post(THWEPOF_i18n::translate($value, 'Field Value - ' . $name)) .'</'.$elm_type.'>';
 
 		$html = self::prepare_field_html_input($field, $section, $input_html);
 		return $html;
@@ -680,7 +685,9 @@ class THWEPOF_Utils_Field {
 		$checked = $field->get_property('checked') ? 'checked=checked' : '';
 		$value = $field->get_property('value') ? $field->get_property('value') : 1;
 		global $thwepof_fid_rndm_vl;
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified by WooCommerce
 		if(isset($_POST[$name])){
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified by WooCommerce
 			$checked = isset($_POST[$name]) && $_POST[$name] == $value ? 'checked=checked' : '';
 		}
 

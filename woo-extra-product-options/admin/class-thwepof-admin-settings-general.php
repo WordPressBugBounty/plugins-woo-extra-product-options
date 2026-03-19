@@ -69,7 +69,7 @@ class THWEPOF_Admin_Settings_General extends THWEPOF_Admin_Settings {
 		$is_wpml_active = THWEPOF_Utils::is_wpml_active();
 		
 		$product_cat = array();
-		$pcat_terms = get_terms('product_cat', 'orderby=count&hide_empty=0');
+		$pcat_terms = get_terms( array( 'taxonomy' => 'product_cat', 'orderby' => 'count', 'hide_empty' => false ) );
 		
 		foreach($pcat_terms as $pterm){
 			$pcat_slug = $pterm->slug;
@@ -103,11 +103,13 @@ class THWEPOF_Admin_Settings_General extends THWEPOF_Admin_Settings {
 
 	public function render_sections() {
 		$result = false;
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified in called methods
 		if(isset($_POST['reset_fields'])){
 			$result = $this->reset_to_default();
 		}
 
-		$s_action = isset($_POST['s_action']) ? wc_clean(wp_unslash($_POST['s_action'])) : false;
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified in called methods
+		$s_action = isset($_POST['s_action']) ? sanitize_text_field(wp_unslash($_POST['s_action'])) : false;
 
 		if($s_action == 'new' || $s_action == 'copy'){
 			$result = $this->create_section();
@@ -147,23 +149,23 @@ class THWEPOF_Admin_Settings_General extends THWEPOF_Admin_Settings {
 			$s_class = $current_section == $name ? 'current' : '';
 			
 			?>
-			<li><a href="<?php echo esc_url($url); ?>" class="<?php echo $s_class; ?>"><?php echo sanitize_text_field($section->get_property('title')); ?></a></li>
+			<li><a href="<?php echo esc_url($url); ?>" class="<?php echo esc_attr($s_class); ?>"><?php echo esc_html(sanitize_text_field($section->get_property('title'))); ?></a></li>
             <li>
             	<form id="section_prop_form_<?php echo esc_attr($name); ?>" method="post" action="">
-                    <input type="hidden" name="f_rules[<?php echo $i; ?>]" class="f_rules" value="<?php echo $rules_json; ?>" />
+                    <input type="hidden" name="f_rules[<?php echo esc_attr($i); ?>]" class="f_rules" value="<?php echo esc_attr($rules_json); ?>" />
                 </form>
-				<span class='s_edit_btn dashicons dashicons-edit tips' data-tip='<?php _e('Edit Section', 'woo-extra-product-options'); ?>'  
-				onclick="thwepofOpenEditSectionForm(<?php echo $props_json; ?>)"></span>
+				<span class='s_edit_btn dashicons dashicons-edit tips' data-tip='<?php esc_attr_e('Edit Section', 'woo-extra-product-options'); ?>'  
+				onclick="thwepofOpenEditSectionForm(<?php echo esc_js($props_json); ?>)"></span>
             </li>
 			<li>
-				<span class="s_copy_btn dashicons dashicons-admin-page tips" data-tip="<?php _e('Duplicate Section', 'woo-extra-product-options'); ?>"  
-				onclick="thwepofOpenCopySectionForm(<?php echo $props_json; ?>)"></span>
+				<span class="s_copy_btn dashicons dashicons-admin-page tips" data-tip="<?php esc_attr_e('Duplicate Section', 'woo-extra-product-options'); ?>"  
+				onclick="thwepofOpenCopySectionForm(<?php echo esc_js($props_json); ?>)"></span>
 			</li>
 			<li>
                 <form method="post" action="">
                     <input type="hidden" name="s_action" value="remove" />
                     <input type="hidden" name="i_name" value="<?php echo esc_attr($name); ?>" />
-					<span class='s_delete_btn dashicons dashicons-no tips' data-tip='<?php _e('Delete Section', 'woo-extra-product-options'); ?>'  
+					<span class='s_delete_btn dashicons dashicons-no tips' data-tip='<?php esc_attr_e('Delete Section', 'woo-extra-product-options'); ?>'  
 					onclick='thwepofRemoveSection(this)'></span>
 					<?php wp_nonce_field( 'remove_section', 'remove_section_'.$name ); ?>
 				</form>
@@ -175,11 +177,11 @@ class THWEPOF_Admin_Settings_General extends THWEPOF_Admin_Settings {
 			
 			$i++;
 		}
-		echo '<li><a href="javascript:void(0)" onclick="thwepofOpenNewSectionForm()" class="btn btn-tiny btn-primary ml-20">+ '. __( 'Add new section', 'woo-extra-product-options') .'</a></li>';
+		echo '<li><a href="javascript:void(0)" onclick="thwepofOpenNewSectionForm()" class="btn btn-tiny btn-primary ml-20">+ '. esc_html__( 'Add new section', 'woo-extra-product-options') .'</a></li>';
 		echo '</ul>';		
 		
 		if($result){
-			echo $result;
+			echo wp_kses_post($result);
 		}
 	}
 
@@ -192,7 +194,8 @@ class THWEPOF_Admin_Settings_General extends THWEPOF_Admin_Settings {
 	}
 
 	private function render_content(){
-    	$action = isset($_POST['i_action']) ? wc_clean(wp_unslash($_POST['i_action'])) : false;
+    	// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified in save_or_update_field
+    	$action = isset($_POST['i_action']) ? sanitize_text_field(wp_unslash($_POST['i_action'])) : false;
     	$section_name = $this->get_current_section();
 		$section = THWEPOF_Utils::get_section_admin($section_name);
 		
@@ -201,13 +204,14 @@ class THWEPOF_Admin_Settings_General extends THWEPOF_Admin_Settings {
 		}
 
 		if($action === 'new' || $action === 'copy'){
-			echo $this->save_or_update_field($section, $action);	
+			echo wp_kses_post($this->save_or_update_field($section, $action));	
 		}else if($action === 'edit'){
-			echo $this->save_or_update_field($section, $action);
+			echo wp_kses_post($this->save_or_update_field($section, $action));
 		}
 		
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified in save_fields
 		if(isset($_POST['save_fields'])){
-			echo $this->save_fields($section);
+			echo wp_kses_post($this->save_fields($section));
 		}
 
 		$section = THWEPOF_Utils::get_section_admin($section_name);
@@ -253,57 +257,66 @@ class THWEPOF_Admin_Settings_General extends THWEPOF_Admin_Settings {
 							}
 							$title = esc_attr($title);
 							$title = stripslashes($title);
+							$title = THWEPOF_i18n::translate($title,"Field Title - " . $name);
 							$title_short = $this->truncate_str($title, 40);
 
 							$placeholder = esc_html($field->get_property('placeholder'));
+							$placeholder = THWEPOF_i18n::translate($placeholder, 'Field Placeholder - ' . $name);
 							$placeholder_short = $this->truncate_str($placeholder, 30);
 						?>
-							<tr class="row_<?php echo $i; echo($is_enabled == 1 ? '' : ' thwepof-disabled') ?>">
+							<tr class="row_<?php echo esc_attr($i); echo($is_enabled == 1 ? '' : ' thwepof-disabled') ?>">
 								<td width="1%" class="sort ui-sortable-handle">
-									<input type="hidden" name="f_name[<?php echo $i; ?>]" class="f_name" value="<?php echo esc_attr($name); ?>" />
-									<input type="hidden" name="f_order[<?php echo $i; ?>]" class="f_order" value="<?php echo $i; ?>" />
-									<input type="hidden" name="f_deleted[<?php echo $i; ?>]" class="f_deleted" value="0" />
-									<input type="hidden" name="f_enabled[<?php echo $i; ?>]" class="f_enabled" value="<?php echo $is_enabled; ?>" />
+									<input type="hidden" name="f_name[<?php echo esc_attr($i); ?>]" class="f_name" value="<?php echo esc_attr($name); ?>" />
+									<input type="hidden" name="f_order[<?php echo esc_attr($i); ?>]" class="f_order" value="<?php echo esc_attr($i); ?>" />
+									<input type="hidden" name="f_deleted[<?php echo esc_attr($i); ?>]" class="f_deleted" value="0" />
+									<input type="hidden" name="f_enabled[<?php echo esc_attr($i); ?>]" class="f_enabled" value="<?php echo esc_attr($is_enabled); ?>" />
 
-									<input type="hidden" name="f_props[<?php echo $i; ?>]" class="f_props" value='<?php echo $props_json; ?>' />
-									<input type="hidden" name="f_rules[<?php echo $i; ?>]" class="f_rules" value="<?php echo $rules_json; ?>" />
+									<input type="hidden" name="f_props[<?php echo esc_attr($i); ?>]" class="f_props" value='<?php echo esc_attr($props_json); ?>' />
+									<input type="hidden" name="f_rules[<?php echo esc_attr($i); ?>]" class="f_rules" value="<?php echo esc_attr($rules_json); ?>" />
 								</td>
 								<td class="td_select"><input type="checkbox" name="select_field"/></td>
 								<td class="td_name"><?php echo esc_attr($name); ?></td>
-								<td class="td_type"><?php _e($type, 'woo-extra-product-options'); ?></td>
+								<td class="td_type"><?php echo esc_html(THWEPOF_i18n::translate($type, 'field_type_' . $name)); ?></td>
 								<td class="td_title">
-									<label title="<?php _e($title, 'woo-extra-product-options'); ?>">
-										<?php _e($title_short, 'woo-extra-product-options'); ?>
+									<label title="<?php echo esc_attr($title); ?>">
+										<?php echo esc_html($title_short); ?>
 									</label>
 								</td>
 								<td class="td_placeholder">
-									<label title="<?php _e($placeholder, 'woo-extra-product-options'); ?>">
-										<?php _e($placeholder_short, 'woo-extra-product-options'); ?>
+									<label title="<?php echo esc_attr($placeholder); ?>">
+										<?php echo esc_html($placeholder_short); ?>
 									</label>
 								</td>
 								<td class="td_validate"><?php echo esc_html($field->get_property('validator')); ?></td>
 								<td class="td_required status">
-									<?php echo($is_required == 1 ? '<span class="dashicons dashicons-yes tips" data-tip="'.__('Yes', 'woo-extra-product-options').'"></span>' : '-' ) ?>
+									<?php echo($is_required == 1 ? '<span class="dashicons dashicons-yes tips" data-tip="'.esc_attr__('Yes', 'woo-extra-product-options').'"></span>' : '-' ) ?>
 								</td>
 								<td class="td_enabled status">
-									<?php echo($is_enabled == 1 ? '<span class="dashicons dashicons-yes tips" data-tip="'.__('Yes', 'woo-extra-product-options').'"></span>' : '-' ) ?>
+									<?php echo($is_enabled == 1 ? '<span class="dashicons dashicons-yes tips" data-tip="'.esc_attr__('Yes', 'woo-extra-product-options').'"></span>' : '-' ) ?>
 								</td>
 
 								<td class="td_actions" align="center">
 									<?php if($is_enabled){ ?>
-										<span class="f_edit_btn dashicons dashicons-edit tips" data-tip="<?php _e('Edit Field', 'woo-extra-product-options'); ?>" onclick="thwepofOpenEditFieldForm(this, <?php echo $i; ?>)"></span>
+										<span class="f_edit_btn dashicons dashicons-edit tips" data-tip="<?php esc_attr_e('Edit Field', 'woo-extra-product-options'); ?>" onclick="thwepofOpenEditFieldForm(this, <?php echo esc_js($i); ?>)"></span>
 									<?php }else{ ?>
 										<span class="f_edit_btn dashicons dashicons-edit disabled"></span>
 									<?php } ?>
 		
-									<span class="f_copy_btn dashicons dashicons-admin-page tips" data-tip="<?php _e('Duplicate Field', 'woo-extra-product-options'); ?>" onclick="thwepofOpenCopyFieldForm(this, <?php echo $i; ?>)"></span>
+									<span class="f_copy_btn dashicons dashicons-admin-page tips" data-tip="<?php esc_attr_e('Duplicate Field', 'woo-extra-product-options'); ?>" onclick="thwepofOpenCopyFieldForm(this, <?php echo esc_js($i); ?>)"></span>
 								</td>
 							</tr>						
 	                <?php 
 						$i++; 
 						endforeach; 
 					}else{
-						echo '<tr><td colspan="10" align="center" class="empty-msg-row">'.__("No custom fields found. Click on <b>Add field</b> button to create new fields.", "woo-extra-product-options").'</td></tr>';
+						echo '<tr><td colspan="10" align="center" class="empty-msg-row">' . 
+							wp_kses(
+								__("No custom fields found. Click on <b>Add field</b> button to create new fields.", "woo-extra-product-options"),
+								array(
+									'b' => array(),
+								)
+							) . 
+						'</td></tr>';					
 					}
 					?>
 	                </tbody>
@@ -328,28 +341,28 @@ class THWEPOF_Admin_Settings_General extends THWEPOF_Admin_Settings {
 		?>
 		<th class="sort"></th>
 		<th class="check-column"><input type="checkbox" style="margin:0px 4px -1px -1px;" onclick="thwepofSelectAllProductFields(this)"/></th>
-		<th class="name"><?php _e('Name', 'woo-extra-product-options'); ?></th>
-		<th class="id"><?php _e('Type', 'woo-extra-product-options'); ?></th>
-		<th><?php _e('Label', 'woo-extra-product-options'); ?></th>
-		<th><?php _e('Placeholder', 'woo-extra-product-options'); ?></th>
-		<th><?php _e('Validations', 'woo-extra-product-options'); ?></th>
-        <th class="status"><?php _e('Required', 'woo-extra-product-options'); ?></th>
-		<th class="status"><?php _e('Enabled', 'woo-extra-product-options'); ?></th>	
-        <th class="status"><?php _e('Actions', 'woo-extra-product-options'); ?></th>	
+		<th class="name"><?php esc_html_e('Name', 'woo-extra-product-options'); ?></th>
+		<th class="id"><?php esc_html_e('Type', 'woo-extra-product-options'); ?></th>
+		<th><?php esc_html_e('Label', 'woo-extra-product-options'); ?></th>
+		<th><?php esc_html_e('Placeholder', 'woo-extra-product-options'); ?></th>
+		<th><?php esc_html_e('Validations', 'woo-extra-product-options'); ?></th>
+        <th class="status"><?php esc_html_e('Required', 'woo-extra-product-options'); ?></th>
+		<th class="status"><?php esc_html_e('Enabled', 'woo-extra-product-options'); ?></th>	
+        <th class="status"><?php esc_html_e('Actions', 'woo-extra-product-options'); ?></th>	
         <?php
 	}
 
 	private function output_actions_row(){
 		?>
         <th colspan="5">
-            <button type="button" onclick="thwepofOpenNewFieldForm()" class="btn btn-small btn-primary"><?php _e('+ Add field', 'woo-extra-product-options'); ?></button>
-            <button type="button" onclick="thwepofRemoveSelectedFields()" class="btn btn-small"><?php _e('Remove', 'woo-extra-product-options'); ?></button>
-            <button type="button" onclick="thwepofEnableSelectedFields()" class="btn btn-small"><?php _e('Enable', 'woo-extra-product-options'); ?></button>
-            <button type="button" onclick="thwepofDisableSelectedFields()" class="btn btn-small"><?php _e('Disable', 'woo-extra-product-options'); ?></button>
+            <button type="button" onclick="thwepofOpenNewFieldForm()" class="btn btn-small btn-primary"><?php esc_html_e('+ Add field', 'woo-extra-product-options'); ?></button>
+            <button type="button" onclick="thwepofRemoveSelectedFields()" class="btn btn-small"><?php esc_html_e('Remove', 'woo-extra-product-options'); ?></button>
+            <button type="button" onclick="thwepofEnableSelectedFields()" class="btn btn-small"><?php esc_html_e('Enable', 'woo-extra-product-options'); ?></button>
+            <button type="button" onclick="thwepofDisableSelectedFields()" class="btn btn-small"><?php esc_html_e('Disable', 'woo-extra-product-options'); ?></button>
         </th>
         <th colspan="5">
-        	<input type="submit" name="save_fields" class="btn btn-small btn-primary" value="<?php _e('Save changes', 'woo-extra-product-options') ?>" style="float:right" />
-            <input type="submit" name="reset_fields" class="btn btn-small" value="<?php _e('Reset to default options', 'woo-extra-product-options') ?>" style="float:right; margin-right: 5px;" 
+        	<input type="submit" name="save_fields" class="btn btn-small btn-primary" value="<?php esc_attr_e('Save changes', 'woo-extra-product-options') ?>" style="float:right" />
+            <input type="submit" name="reset_fields" class="btn btn-small" value="<?php esc_attr_e('Reset to default options', 'woo-extra-product-options') ?>" style="float:right; margin-right: 5px;" 
 			onclick="return confirm('Are you sure you want to reset to default fields? all your changes will be deleted.');"/>
         </th>  
     	<?php 
@@ -424,7 +437,7 @@ class THWEPOF_Admin_Settings_General extends THWEPOF_Admin_Settings {
 		$section  = THWEPOF_Utils_Section::prepare_section_from_posted_data($_POST, 'edit');
 		$name 	  = $section->get_property('name');
 		$position = $section->get_property('position');
-		$old_position = !empty($_POST['i_position_old']) ? wc_clean(wp_unslash($_POST['i_position_old'])) : '';
+		$old_position = !empty($_POST['i_position_old']) ? sanitize_text_field(wp_unslash($_POST['i_position_old'])) : '';
 		
 		if($old_position && $position && ($old_position != $position)){			
 			$this->remove_section_from_hook($position_old, $name);
@@ -440,7 +453,7 @@ class THWEPOF_Admin_Settings_General extends THWEPOF_Admin_Settings {
 	}
 
 	public function remove_section(){
-		$section_name = !empty($_POST['i_name']) ? wc_clean(wp_unslash($_POST['i_name'])) : false;
+		$section_name = !empty($_POST['i_name']) ? sanitize_text_field(wp_unslash($_POST['i_name'])) : false;
 
 		check_admin_referer( 'remove_section', 'remove_section_'.$section_name );
 
@@ -586,14 +599,18 @@ class THWEPOF_Admin_Settings_General extends THWEPOF_Admin_Settings {
 				wp_die();
 			}
 
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized via wc_clean
 			$f_names = !empty( $_POST['f_name'] ) ? wc_clean(wp_unslash($_POST['f_name'])) : array();	
 			if(empty($f_names)){
 				$this->print_notices(__('Your changes were not saved due to no fields found.', 'woo-extra-product-options'), 'error', false);
 				return;
 			}
 			
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized via wc_clean
 			$f_order   = !empty( $_POST['f_order'] ) ? wc_clean(wp_unslash($_POST['f_order'])) : array();	
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized via wc_clean
 			$f_deleted = !empty( $_POST['f_deleted'] ) ? wc_clean(wp_unslash($_POST['f_deleted'])) : array();
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized via wc_clean
 			$f_enabled = !empty( $_POST['f_enabled'] ) ? wc_clean(wp_unslash($_POST['f_enabled'])) : array();
 						
 			$sname = $section->get_property('name');

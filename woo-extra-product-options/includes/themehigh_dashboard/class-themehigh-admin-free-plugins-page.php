@@ -16,7 +16,7 @@ if (!defined('ABSPATH')) {
 if (!class_exists('ThemeHigh_Admin_Free_Plugins_Page')) {
     class ThemeHigh_Admin_Free_Plugins_Page {
         
-        const TEXT_DOMAIN = 'themehigh';
+        const TEXT_DOMAIN = 'woo-extra-product-options';
         const CACHE_EXPIRATION = 12 * HOUR_IN_SECONDS;
         
         /**
@@ -24,13 +24,13 @@ if (!class_exists('ThemeHigh_Admin_Free_Plugins_Page')) {
          */
         public static function render() {
             echo '<div class="wrap">';
-            echo '<h1>' . esc_html__('Discover Free ThemeHigh Plugins', self::TEXT_DOMAIN) . '</h1>';
+            echo '<h1>' . esc_html__('Discover Free ThemeHigh Plugins', 'woo-extra-product-options') . '</h1>';
             
             $plugins = self::get_themehigh_plugins_from_wp_org();
             
             if (empty($plugins)) {
                 echo '<div class="notice notice-info"><p>' . 
-                    esc_html__('No free ThemeHigh plugins found or there was an error fetching them.', self::TEXT_DOMAIN) . 
+                    esc_html__('No free ThemeHigh plugins found or there was an error fetching them.', 'woo-extra-product-options') . 
                     '</p></div>';
                 echo '</div>';
                 return;
@@ -73,13 +73,13 @@ if (!class_exists('ThemeHigh_Admin_Free_Plugins_Page')) {
                     </div>
                     <div class="themehigh-plugin-modal-footer">
                         <a href="#" class="button wordpress-link" target="_blank">
-                            <?php echo esc_html__('View on WordPress.org', self::TEXT_DOMAIN); ?>
+                            <?php echo esc_html__('View on WordPress.org', 'woo-extra-product-options'); ?>
                         </a>
                         <div class="plugin-action-buttons">
                             <!-- Dynamic buttons will be inserted here -->
                         </div>
                         <button class="button close-modal">
-                            <?php echo esc_html__('Close', self::TEXT_DOMAIN); ?>
+                            <?php echo esc_html__('Close', 'woo-extra-product-options'); ?>
                         </button>
                     </div>
                 </div>
@@ -139,8 +139,10 @@ if (!class_exists('ThemeHigh_Admin_Free_Plugins_Page')) {
                         <div>
                             <span style="display: inline-block; background: #f0f0f0; padding: 2px 8px; border-radius: 3px; font-size: 0.9em;">
                                 <?php 
+                                
                                 printf(
-                                    esc_html__('Version %s', self::TEXT_DOMAIN),
+                                    /* translators: %s: Plugin version number */
+                                    esc_html__('Version %s', 'woo-extra-product-options'), 
                                     esc_html($plugin->version)
                                 );
                                 ?>
@@ -152,24 +154,24 @@ if (!class_exists('ThemeHigh_Admin_Free_Plugins_Page')) {
                 <div class="th-plugins-bottom">
                     <div class="plugin-actions" style="margin-top: 15px; display: flex; gap: 10px;">
                         <button class="button view-details" 
-                                data-plugin='<?php echo htmlspecialchars(json_encode($plugin), ENT_QUOTES, 'UTF-8'); ?>'
+                                data-plugin='<?php echo esc_attr(wp_json_encode($plugin)); ?>'
                                 data-activation-url='<?php echo esc_url($activation_url); ?>'>
-                            <?php esc_html_e('View Details', self::TEXT_DOMAIN); ?>
+                            <?php esc_html_e('View Details', 'woo-extra-product-options'); ?>
                         </button>
 
                         <?php if ($plugin_active) : ?>
                             <span class="button button-disabled">
-                                <?php esc_html_e('Active', self::TEXT_DOMAIN); ?>
+                                <?php esc_html_e('Active', 'woo-extra-product-options'); ?>
                             </span>
                         <?php elseif ($plugin_installed) : ?>
                             <a href="<?php echo esc_url($activation_url); ?>" class="button button-primary">
-                                <?php esc_html_e('Activate', self::TEXT_DOMAIN); ?>
+                                <?php esc_html_e('Activate', 'woo-extra-product-options'); ?>
                             </a>
                         <?php else : ?>
                             <button class="button button-primary install-plugin"
                                     data-slug="<?php echo esc_attr($plugin->slug); ?>"
                                     data-name="<?php echo esc_attr($plugin->name); ?>">
-                                <?php esc_html_e('Install Now', self::TEXT_DOMAIN); ?>
+                                <?php esc_html_e('Install Now', 'woo-extra-product-options'); ?>
                             </button>
                         <?php endif; ?>
                     </div>
@@ -215,7 +217,6 @@ if (!class_exists('ThemeHigh_Admin_Free_Plugins_Page')) {
             ));
             
             if (is_wp_error($response)) {
-                error_log('ThemeHigh Plugin API Error: ' . $response->get_error_message());
                 return array();
             }
             
@@ -314,19 +315,19 @@ if (!class_exists('ThemeHigh_Admin_Free_Plugins_Page')) {
                             '<button class="button button-primary install-from-modal" ' +
                             'data-slug="' + pluginData.slug + '" ' +
                             'data-name="' + pluginData.name + '">' +
-                            '<?php esc_html_e("Install Now", self::TEXT_DOMAIN); ?>' +
+                            '<?php esc_html_e("Install Now", 'woo-extra-product-options'); ?>' +
                             '</button>'
                         );
                     } else if (pluginState === 'activate') {
                         $modal.find('.plugin-action-buttons').html(
                             '<a href="' + activationUrl + '" class="button button-primary">' +
-                            '<?php esc_html_e("Activate", self::TEXT_DOMAIN); ?>' +
+                            '<?php esc_html_e("Activate", 'woo-extra-product-options'); ?>' +
                             '</a>'
                         );
                     } else {
                         $modal.find('.plugin-action-buttons').html(
                             '<span class="button button-disabled">' +
-                            '<?php esc_html_e("Active", self::TEXT_DOMAIN); ?>' +
+                            '<?php esc_html_e("Active", 'woo-extra-product-options'); ?>' +
                             '</span>'
                         );
                     }
@@ -340,11 +341,11 @@ if (!class_exists('ThemeHigh_Admin_Free_Plugins_Page')) {
                     $modal.find('.plugin-description').html(pluginData.short_description);
 
                     // Add meta information
-                    $modal.find('.plugin-version').html('<strong><?php esc_html_e("Version:", self::TEXT_DOMAIN); ?></strong> ' + pluginData.version);
-                    $modal.find('.plugin-active-installs').html('<strong><?php esc_html_e("Active Installations:", self::TEXT_DOMAIN); ?></strong> ' + pluginData.active_installs.toLocaleString() + '+');
+                    $modal.find('.plugin-version').html('<strong><?php esc_html_e("Version:", 'woo-extra-product-options'); ?></strong> ' + pluginData.version);
+                    $modal.find('.plugin-active-installs').html('<strong><?php esc_html_e("Active Installations:", 'woo-extra-product-options'); ?></strong> ' + pluginData.active_installs.toLocaleString() + '+');
 
                     // Rating
-                    var ratingText = '<strong><?php esc_html_e("Rating:", self::TEXT_DOMAIN); ?></strong> ';
+                    var ratingText = '<strong><?php esc_html_e("Rating:", 'woo-extra-product-options'); ?></strong> ';
                     var starCount = Math.round(pluginData.rating / 20);
                     var fullStars = Math.floor(starCount);
                     var halfStar = (starCount - fullStars) >= 0.5;
@@ -360,11 +361,11 @@ if (!class_exists('ThemeHigh_Admin_Free_Plugins_Page')) {
                         ratingText += '<span class="dashicons dashicons-star-empty" style="color: #ffb900;"></span>';
                     }
 
-                    ratingText += ' (' + pluginData.num_ratings.toLocaleString() + ' <?php esc_html_e("ratings", self::TEXT_DOMAIN); ?>)';
+                    ratingText += ' (' + pluginData.num_ratings.toLocaleString() + ' <?php esc_html_e("ratings", 'woo-extra-product-options'); ?>)';
                     $modal.find('.plugin-rating').html(ratingText);
 
                     // Author
-                    $modal.find('.plugin-author').html('<strong><?php esc_html_e("Author:", self::TEXT_DOMAIN); ?></strong> ' + pluginData.author);
+                    $modal.find('.plugin-author').html('<strong><?php esc_html_e("Author:", 'woo-extra-product-options'); ?></strong> ' + pluginData.author);
                     
                     // Show modal
                     $modal.fadeIn();
@@ -391,7 +392,7 @@ if (!class_exists('ThemeHigh_Admin_Free_Plugins_Page')) {
                     var slug = $button.data('slug');
                     var pluginName = $button.data('name');
 
-                    $button.addClass('updating-message').text('<?php esc_html_e('Installing...', self::TEXT_DOMAIN); ?>');
+                    $button.addClass('updating-message').text('<?php esc_html_e('Installing...', 'woo-extra-product-options'); ?>');
 
                     wp.updates.installPlugin({
                         slug: slug,
@@ -401,7 +402,7 @@ if (!class_exists('ThemeHigh_Admin_Free_Plugins_Page')) {
                             // Replace the install button with an activation link
                             $button.replaceWith(
                                 '<a href="' + activationUrl + '" class="button button-primary">' +
-                                '<?php esc_html_e("Activate", self::TEXT_DOMAIN); ?>' +
+                                '<?php esc_html_e("Activate", 'woo-extra-product-options'); ?>' +
                                 '</a>'
                             );
 
@@ -409,7 +410,7 @@ if (!class_exists('ThemeHigh_Admin_Free_Plugins_Page')) {
                             $button.closest('.th-plugins-child').find('.view-details').data('activation-url', activationUrl);
                         },
                         error: function(response) {
-                            $button.removeClass('updating-message').text('<?php esc_html_e('Install Failed', self::TEXT_DOMAIN); ?>');
+                            $button.removeClass('updating-message').text('<?php esc_html_e('Install Failed', 'woo-extra-product-options'); ?>');
                         }
                     });
                 });

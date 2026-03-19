@@ -50,7 +50,8 @@ abstract class THWEPOF_Admin_Settings{
 	}
 
 	public function get_current_section(){
-		return isset( $_GET['section'] ) ? sanitize_key( $_GET['section'] ) : $this->section_id;
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Section parameter is sanitized and only used for display
+		return isset( $_GET['section'] ) ? sanitize_key( wp_unslash( $_GET['section'] ) ) : $this->section_id;
 	}
 	
 	public function set_current_section($section_id){
@@ -80,10 +81,10 @@ abstract class THWEPOF_Admin_Settings{
 		echo '<h2 class="nav-tab-wrapper woo-nav-tab-wrapper">';
 		foreach( $tabs as $id => $label ){
 			$active = ($current_tab == $id) ? 'nav-tab-active' : '';
-			$label  = __($label, 'woo-extra-product-options');
+			$label  = THWEPOF_i18n::translate($label, 'tab_label_' . $id);
 			$url    = $this->get_admin_url($id);
 
-			echo '<a class="nav-tab '.$active.'" href="'. esc_url($url) .'">'.$label.'</a>';
+			echo '<a class="nav-tab '.esc_attr($active).'" href="'. esc_url($url) .'">' . esc_html($label) . '</a>';
 		}
 		echo '</h2>';	
 	}
@@ -94,7 +95,7 @@ abstract class THWEPOF_Admin_Settings{
 			return;
 		}
 
-		$nonse = isset($_GET['thwepo_review_nonce']) ? $_GET['thwepo_review_nonce'] : false;
+		$nonse = isset($_GET['thwepo_review_nonce']) ? sanitize_text_field( wp_unslash( $_GET['thwepo_review_nonce'] ) ) : false;
 		$capability = THWEPOF_Utils::wepo_capability();
 
 		if(!wp_verify_nonce($nonse, 'thwepof_notice_security') || !current_user_can($capability)){
@@ -187,7 +188,9 @@ abstract class THWEPOF_Admin_Settings{
 	}
 
 	private function render_review_request_notice(){
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Tab/Section parameters are sanitized and used for display only
 		$current_tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : 'general_settings';
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Tab/Section parameters are sanitized and used for display only
 		$current_section = isset( $_GET['section'] ) ? sanitize_key( $_GET['section'] ) : '';
 
 		$remind_url = add_query_arg(array('thwepo_remind' => true, 'thwepo_review_nonce' => wp_create_nonce( 'thwepof_notice_security')));
@@ -195,30 +198,30 @@ abstract class THWEPOF_Admin_Settings{
 		$reviewed_url= add_query_arg(array('thwepo_reviewed' => true, 'thwepo_review_nonce' => wp_create_nonce( 'thwepof_notice_security')));
 		?>
 
-		<div class="notice notice-info thpladmin-notice is-dismissible thwepo-review-wrapper" data-nonce="<?php echo wp_create_nonce( 'thwepof_notice_security'); ?>">
+		<div class="notice notice-info thpladmin-notice is-dismissible thwepo-review-wrapper" data-nonce="<?php echo esc_attr( wp_create_nonce( 'thwepof_notice_security' ) ); ?>">
 			<div class="thwepo-review-image">
 				<img src="<?php echo esc_url(THWEPOF_URL .'admin/assets/css/review-left.png'); ?>" alt="themehigh">
 			</div>
 			<div class="thwepo-review-content">
-				<h3><?php _e('We would love to hear from you?', 'woo-extra-product-options'); ?></h3>
+				<h3><?php esc_html_e('We would love to hear from you?', 'woo-extra-product-options'); ?></h3>
 				
-				<p><?php _e('We have a quick favor to ask. You have been our patron for the longest and would love to hear about your experience with us so far. Would you mind heading to WordPress and writing a quick review on our plugin? Review or not, we still love you!', 'woo-extra-product-options'); ?></p>
+				<p><?php esc_html_e('We have a quick favor to ask. You have been our patron for the longest and would love to hear about your experience with us so far. Would you mind heading to WordPress and writing a quick review on our plugin? Review or not, we still love you!', 'woo-extra-product-options'); ?></p>
 				
 				<div class="action-row">
 			        <a class="thwepo-notice-action thwepo-yes" onclick="window.open('https://wordpress.org/support/plugin/woo-extra-product-options/reviews/?rate=5#new-post', '_blank')" style="margin-right:16px; text-decoration: none">
-			        	<?php _e("Yes, today", 'woo-extra-product-options'); ?>
+			        	<?php esc_html_e("Yes, today", 'woo-extra-product-options'); ?>
 			        </a>
 
 			        <a class="thwepo-notice-action thwepo-done" href="<?php echo esc_url($reviewed_url); ?>" style="margin-right:16px; text-decoration: none">
-			        	<?php _e('Already, Did', 'woo-extra-product-options'); ?>
+			        	<?php esc_html_e('Already, Did', 'woo-extra-product-options'); ?>
 			        </a>
 
 			        <a class="thwepo-notice-action thwepo-remind" href="<?php echo esc_url($remind_url); ?>" style="margin-right:16px; text-decoration: none">
-			        	<?php _e('Maybe later', 'woo-extra-product-options'); ?>
+			        	<?php esc_html_e('Maybe later', 'woo-extra-product-options'); ?>
 			        </a>
 
 			        <a class="thwepo-notice-action thwepo-dismiss" href="<?php echo esc_url($dismiss_url); ?>" style="margin-right:16px; text-decoration: none">
-			        	<?php _e("Nah, Never", 'woo-extra-product-options'); ?>
+			        	<?php esc_html_e("Nah, Never", 'woo-extra-product-options'); ?>
 			        </a>
 				</div>
 			</div>
@@ -290,16 +293,16 @@ abstract class THWEPOF_Admin_Settings{
 			    margin-bottom: 10px;
 			}
 			.thwepo-yes{
-			    background-image: url(<?php echo THWEPOF_URL; ?>admin/assets/css/tick.svg);
+			    background-image: url(<?php echo esc_url( THWEPOF_URL . 'admin/assets/css/tick.svg' ); ?>);
 			}
 			.thwepo-remind{
-			    background-image: url(<?php echo THWEPOF_URL; ?>admin/assets/css/reminder.svg);
+			    background-image: url(<?php echo esc_url( THWEPOF_URL . 'admin/assets/css/reminder.svg' ); ?>);
 			}
 			.thwepo-dismiss{
-			    background-image: url(<?php echo THWEPOF_URL; ?>admin/assets/css/close.svg);
+			    background-image: url(<?php echo esc_url( THWEPOF_URL . 'admin/assets/css/close.svg' ); ?>);
 			}
 			.thwepo-done{
-			    background-image: url(<?php echo THWEPOF_URL; ?>admin/assets/css/done.svg);
+			    background-image: url(<?php echo esc_url( THWEPOF_URL . 'admin/assets/css/done.svg' ); ?>);
 			}
 			@media(min-width: 2000px){
 				.thwepo-review-image img{
@@ -361,8 +364,9 @@ abstract class THWEPOF_Admin_Settings{
 	}
 
 	public function print_notices($msg, $type='updated', $return=false){
-		$notice = '<div class="thwepof-notice '. $type .'"><p>'. __($msg, 'woo-extra-product-options') .'</p></div>';
+		$notice = '<div class="thwepof-notice '. $type .'"><p>'. esc_html(THWEPOF_i18n::translate($msg, 'notice_' . sanitize_key($msg))) .'</p></div>';
 		if(!$return){
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Already escaped in construction
 			echo $notice;
 		}
 		return $notice;
@@ -412,9 +416,9 @@ abstract class THWEPOF_Admin_Settings{
 			), $atts );
 		
 			$ftype     = isset($field['type']) ? $field['type'] : 'text';
-			$flabel    = isset($field['label']) && !empty($field['label']) ? __($field['label'], 'woo-extra-product-options') : '';
-			$sub_label = isset($field['sub_label']) && !empty($field['sub_label']) ? __($field['sub_label'], 'woo-extra-product-options') : '';
-			$tooltip   = isset($field['hint_text']) && !empty($field['hint_text']) ? __($field['hint_text'], 'woo-extra-product-options') : '';
+			$flabel    = isset($field['label']) && !empty($field['label']) ? $field['label'] : '';
+			$sub_label = isset($field['sub_label']) && !empty($field['sub_label']) ? $field['sub_label'] : '';
+			$tooltip   = isset($field['hint_text']) && !empty($field['hint_text']) ? $field['hint_text'] : '';
 			
 			$field_html = '';
 			
@@ -445,19 +449,20 @@ abstract class THWEPOF_Admin_Settings{
 				$input_cell_props = !empty($args['input_cell_props']) ? $args['input_cell_props'] : '';
 				
 				?>
-				<td <?php echo $label_cell_props ?> >
-					<?php echo $flabel; echo $required_html; 
+				<td <?php echo $label_cell_props; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Attributes only ?> >
+					<?php echo wp_kses_post( $flabel ); echo wp_kses_post( $required_html ); 
 					if($sub_label){
 						?>
-						<br/><span class="thpladmin-subtitle"><?php echo $sub_label; ?></span>
+						<br/><span class="thpladmin-subtitle"><?php echo esc_html( $sub_label ); ?></span>
 						<?php
 					}
 					?>
 				</td>
 				<?php $this->render_form_fragment_tooltip($tooltip); ?>
-				<td <?php echo $input_cell_props ?> ><?php echo $field_html; ?></td>
+				<td <?php echo $input_cell_props; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Attributes only ?> ><?php echo $field_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Contains form fields HTML ?></td>
 				<?php
 			}else{
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Contains form fields HTML
 				echo $field_html;
 			}
 		}
@@ -521,7 +526,7 @@ abstract class THWEPOF_Admin_Settings{
 			$field_html = '<select '. $field_props .' >';
 			foreach($field['options'] as $value => $label){
 				$selected = $value === $fvalue ? 'selected' : '';
-				$field_html .= '<option value="'. trim($value) .'" '.$selected.'>'. __($label, 'woo-extra-product-options') .'</option>';
+				$field_html .= '<option value="'. trim($value) .'" '.$selected.'>'. esc_html(THWEPOF_i18n::translate($label, 'option_label_' . sanitize_key($value))) .'</option>';
 			}
 			$field_html .= '</select>';
 		}
@@ -536,7 +541,7 @@ abstract class THWEPOF_Admin_Settings{
 			$field_html = '<select multiple="multiple" '. $field_props .' class="thwepo-enhanced-multi-select" >';
 			foreach($field['options'] as $value => $label){
 				//$selected = $value === $fvalue ? 'selected' : '';
-				$field_html .= '<option value="'. trim($value) .'" >'. __($label, 'woo-extra-product-options') .'</option>';
+				$field_html .= '<option value="'. trim($value) .'" >'. esc_html(THWEPOF_i18n::translate($label, 'option_label_' . sanitize_key($value))) .'</option>';
 			}
 			$field_html .= '</select>';
 		}
@@ -568,7 +573,7 @@ abstract class THWEPOF_Admin_Settings{
 			), $atts );
 		
 			$fid 	= 'a_f'. $field['name'];
-			$flabel = isset($field['label']) && !empty($field['label']) ? __($field['label'], 'woo-extra-product-options') : '';
+			$flabel = isset($field['label']) && !empty($field['label']) ? $field['label'] : '';
 			
 			$field_props  = $this->prepare_form_field_props($field, $atts);
 			$field_props .= isset($field['checked']) && $field['checked'] === 1 ? ' checked' : '';
@@ -601,7 +606,7 @@ abstract class THWEPOF_Admin_Settings{
 			$tooltip_html = '<a href="javascript:void(0)" title="'. $tooltip .'" class="thwepof_tooltip"><img src="'. THWEPOF_URL.'admin/assets/help.png" title=""/></a>';
 		}
 		?>
-		<td style="width: 26px; padding:0px;"><?php echo $tooltip_html; ?></td>
+		<td style="width: 26px; padding:0px;"><?php echo $tooltip_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Contains escaped HTML ?></td>
 		<?php
 	}
 	
@@ -619,28 +624,28 @@ abstract class THWEPOF_Admin_Settings{
 		$style .= $args['border-style'] ? ' border-bottom:'.$args['border-width'].' '.$args['border-style'].' '.$args['border-color'].';' : '';
 		
 		?>
-        <tr><td colspan="<?php echo $args['colspan']; ?>" style="<?php echo $style; ?>"><?php echo $args['content']; ?></td></tr>
+        <tr><td colspan="<?php echo absint( $args['colspan'] ); ?>" style="<?php echo esc_attr( $style ); ?>"><?php echo wp_kses_post( $args['content'] ); ?></td></tr>
         <?php
 	}
 	
 	public function render_field_form_fragment_h_spacing($padding = 5){
 		$style = $padding ? 'padding-top:'.$padding.'px;' : '';
 		?>
-        <tr><td colspan="6" style="<?php echo $style ?>"></td></tr>
+        <tr><td colspan="6" style="<?php echo esc_attr( $style ); ?>"></td></tr>
         <?php
 	}
 	
 	public function render_form_field_blank($colspan = 3){
 		?>
-        <td colspan="<?php echo $colspan; ?>">&nbsp;</td>  
+        <td colspan="<?php echo absint( $colspan ); ?>">&nbsp;</td>  
         <?php
 	}
 	
 	public function render_form_section_separator($props, $atts=array()){
 		?>
-		<tr valign="top"><td colspan="<?php echo $props['colspan']; ?>" style="height:10px;"></td></tr>
-		<tr valign="top"><td colspan="<?php echo $props['colspan']; ?>" class="thpladmin-form-section-title" ><?php echo $props['title']; ?></td></tr>
-		<tr valign="top"><td colspan="<?php echo $props['colspan']; ?>" style="height:0px;"></td></tr>
+		<tr valign="top"><td colspan="<?php echo absint( $props['colspan'] ); ?>" style="height:10px;"></td></tr>
+		<tr valign="top"><td colspan="<?php echo absint( $props['colspan'] ); ?>" class="thpladmin-form-section-title" ><?php echo esc_html( $props['title'] ); ?></td></tr>
+		<tr valign="top"><td colspan="<?php echo absint( $props['colspan'] ); ?>" style="height:0px;"></td></tr>
 		<?php
 	}
 

@@ -61,18 +61,18 @@ class THWEPOF_Admin_Form_Section extends THWEPOF_Admin_Form{
 					<div class="modal-body">
 						<div class="form-wizard wizard">
 							<aside>
-								<side-title class="wizard-title"><?php _e('Save Section', 'woo-extra-product-options'); ?></side-title>
+								<side-title class="wizard-title"><?php esc_html_e('Save Section', 'woo-extra-product-options'); ?></side-title>
 								<ul class="pp_nav_links">
 									<li class="text-primary active first" data-index="0">
-										<i class="dashicons dashicons-admin-generic text-primary"></i><?php _e('Basic Info', 'woo-extra-product-options'); ?>
+										<i class="dashicons dashicons-admin-generic text-primary"></i><?php esc_html_e('Basic Info', 'woo-extra-product-options'); ?>
 										<i class="i i-chevron-right dashicons dashicons-arrow-right-alt2"></i>
 									</li>
 									<li class="text-primary" data-index="1">
-										<i class="dashicons dashicons-art text-primary"></i><?php _e('Display Styles', 'woo-extra-product-options'); ?>
+										<i class="dashicons dashicons-art text-primary"></i><?php esc_html_e('Display Styles', 'woo-extra-product-options'); ?>
 										<i class="i i-chevron-right dashicons dashicons-arrow-right-alt2"></i>
 									</li>
 									<li class="text-primary last" data-index="2">
-										<i class="dashicons dashicons-filter text-primary"></i><?php _e('Display Rules', 'woo-extra-product-options'); ?>
+										<i class="dashicons dashicons-filter text-primary"></i><?php esc_html_e('Display Rules', 'woo-extra-product-options'); ?>
 										<i class="i i-chevron-right dashicons dashicons-arrow-right-alt2"></i>
 									</li>
 								</ul>
@@ -101,13 +101,13 @@ class THWEPOF_Admin_Form_Section extends THWEPOF_Admin_Form{
 								<span class="Loader"></span>
 								<div class="btn-toolbar">
 									<button class="save-btn pull-right btn btn-primary" onclick="thwepofSaveSection(this)">
-										<span><?php _e('Save & Close', 'woo-extra-product-options'); ?></span>
+										<span><?php esc_html_e('Save & Close', 'woo-extra-product-options'); ?></span>
 									</button>
 									<button class="next-btn pull-right btn btn-primary-alt" onclick="thwepofWizardNext(this)">
-										<span><?php _e('Next', 'woo-extra-product-options'); ?></span><i class="i i-plus"></i>
+										<span><?php esc_html_e('Next', 'woo-extra-product-options'); ?></span><i class="i i-plus"></i>
 									</button>
 									<button class="prev-btn pull-right btn btn-primary-alt" onclick="thwepofWizardPrevious(this)">
-										<span><?php _e('Back', 'woo-extra-product-options'); ?></span><i class="i i-plus"></i>
+										<span><?php esc_html_e('Back', 'woo-extra-product-options'); ?></span><i class="i i-plus"></i>
 									</button>
 								</div>
 							</footer>

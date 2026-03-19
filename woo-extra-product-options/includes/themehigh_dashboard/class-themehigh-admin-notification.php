@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
 if (!class_exists('ThemeHigh_Notifications_Page')) {
     class ThemeHigh_Notifications_Page {
         public static function render() {
-            echo '<div class="wrap"><h1>' . esc_html__('Notifications', ThemeHigh_Admin_Menu::TEXT_DOMAIN) . '</h1>';
+            echo '<div class="wrap"><h1>' . esc_html__('Notifications', 'woo-extra-product-options') . '</h1>';
             echo '</div>';
         }
     }

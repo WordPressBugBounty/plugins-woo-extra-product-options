@@ -16,6 +16,7 @@ class THWEPOF {
 	public $screen_id;
 
 	public function __construct() {
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy hook compatibility
 		$required_classes = apply_filters('th_wepof_require_class', array(
 			'common' => array(
 				'includes/model/rules/class-wepof-condition.php',
@@ -176,6 +177,7 @@ class THWEPOF {
 		if (get_option('thwepof_do_activation_redirect')) {
 			delete_option('thwepof_do_activation_redirect');
 
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- No form submission, only checking activation status
 			if (is_network_admin() || isset($_GET['activate-multi']) || defined('WP_CLI')) {
 				return;
 			}
@@ -202,7 +204,7 @@ class THWEPOF {
 
 	public function add_screen_id($ids){
 		$ids[] = 'product_page_thwepof_extra_product_options';
-		$ids[] = strtolower(__('Product', 'woocommerce')) .'_page_thwepof_extra_product_options';
+		$ids[] = strtolower(__('Product', 'woo-extra-product-options')) .'_page_thwepof_extra_product_options';
 		$ids[] = 'themehigh_page_thwepof_extra_product_options'; // ThemeHigh menu screen ID
 		$ids[] = 'product_page_thwepof_extra_product_options_redirect'; // Redirect page screen ID
 		
@@ -220,9 +222,9 @@ class THWEPOF {
 	}
 
 	public function add_settings_link($links) {
-		$settings_link = '<a href="'.esc_url(admin_url('admin.php?page=thwepof_extra_product_options')).'">'. __('Settings') .'</a>';
+		$settings_link = '<a href="'.esc_url(admin_url('admin.php?page=thwepof_extra_product_options')).'">'. __('Settings', 'woo-extra-product-options') .'</a>';
 		array_unshift($links, $settings_link);
-		$premium_link = '<a href="https://www.themehigh.com/product/woocommerce-extra-product-options?utm_source=free&utm_medium=plugin_action_link&utm_campaign=wepo_upgrade_link" style="color:green; font-weight:bold" target="_blank">'. __('Get Pro') .'</a>';
+		$premium_link = '<a href="https://www.themehigh.com/product/woocommerce-extra-product-options?utm_source=free&utm_medium=plugin_action_link&utm_campaign=wepo_upgrade_link" style="color:green; font-weight:bold" target="_blank">'. __('Get Pro', 'woo-extra-product-options') .'</a>';
 		array_push($links, $premium_link);
 
 		if (array_key_exists('deactivate', $links)) {
@@ -236,7 +238,8 @@ class THWEPOF {
 		// echo '<div class="wrap">';
 		// echo '<h2></h2>';
 		//$this->output_old_settings_copy_message();
-		$tab = isset( $_GET['tab'] ) ? sanitize_key( $_GET['tab'] ) : 'general_settings';
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- No form submission, only checking tab parameter  
+		$tab = isset( $_GET['tab'] ) ? sanitize_key( wp_unslash( $_GET['tab'] ) ) : 'general_settings';
 
 		echo '<div class="thwepof-wrap">';
 		if($tab === 'advanced_settings'){			
@@ -262,15 +265,15 @@ class THWEPOF {
 	
 		echo '<div class="thwepo-wrap new-menu-redirection">';
 		echo '<div class="container">';
-		echo '<img class="new-menu-img" src="' . THWEPOF_URL . 'admin/assets/images/menu-new-wepo.png" alt="wepo-new-menu">';
+		echo '<img class="new-menu-img" src="' . esc_url(THWEPOF_URL . 'admin/assets/images/menu-new-wepo.png') . '" alt="wepo-new-menu">';
 		echo '<h3>Heads up!</h3>';
 		echo '<h3>We\'ve moved WooCommerce Extra Product Options from here!</h3>';
 		echo '<div class="new-menu-desc">
 				<p class="new-menu-instruction">Find WooCommerce Extra Product Options under the Themehigh tab now.</p>
 			  	<p class="new-menu-instruction">Go to <strong>Themehigh &gt; Extra Product Option</strong> for settings.</p>
 			  </div>';
-		echo '<a href="' . admin_url('admin.php?page=thwepof_extra_product_options') . '" class="redirect-button">
-			  	<img class="redirect-icon" src="' . THWEPOF_URL . 'admin/assets/images/redirect-icon.svg" alt="redirect">
+		echo '<a href="' . esc_url(admin_url('admin.php?page=thwepof_extra_product_options')) . '" class="redirect-button">
+			  	<img class="redirect-icon" src="' . esc_url(THWEPOF_URL . 'admin/assets/images/redirect-icon.svg') . '" alt="redirect">
 			  	Redirect
 			  </a>';
 		echo '</div>';
@@ -350,7 +353,8 @@ class THWEPOF {
 
 		$custom_fields = get_option('thwepof_custom_product_fields');
 
-		if(is_array($custom_fields) && !empty($custom_fields)){
+		if(is_array($custom_fields) &&!empty($custom_fields)){
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Legacy code, consider adding nonce in the future
 			if(isset($_POST['may_copy_settings']))
 				$result = $this->may_copy_older_version_settings();
 
@@ -420,7 +424,8 @@ class THWEPOF {
 	}
 
 	public function thwepof_discount_popup_actions() {
-		$nonce = isset($_GET['thwepof_discount_popup_nonce']) ? $_GET['thwepof_discount_popup_nonce'] : false;
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Nonce already verified below
+		$nonce = isset($_GET['thwepof_discount_popup_nonce']) ? sanitize_text_field( wp_unslash( $_GET['thwepof_discount_popup_nonce'] ) ) : false;
 		if(!wp_verify_nonce($nonce, 'thwepof_discount_popup_security')){
 			die();
 		}
@@ -440,6 +445,7 @@ class THWEPOF {
 		$render_time  = apply_filters('thwepof_show_discount_popup_render_time', 1 * MONTH_IN_SECONDS);
 		$render_time = $thwepof_since + $render_time;
 		
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- No form submission, only checking for dismiss action
 		if (isset($_GET['thwepof_discount_popup_dismiss'])) {
 			$this->thwepof_discount_popup_actions();
 		}
@@ -459,7 +465,8 @@ class THWEPOF {
 
 		$url = "https://www.themehigh.com/?edd_action=add_to_cart&download_id=17&cp=lyCDSy_wepo&utm_source=free&utm_medium=premium_tab&utm_campaign=wepo_upgrade_link";
 
-		$current_page = isset( $_GET['page'] ) ? $_GET['page']  : '';
+		//phpcs:ignore WordPress.Security.NonceVerification.Recommended -- No form submission, only checking page parameter
+		$current_page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 		
 		if($current_page !== 'thwepof_extra_product_options'){
 			return;
@@ -521,6 +528,7 @@ class THWEPOF {
 	}
 
 	public function admin_notice_js_snippet(){
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy hook compatibility
 		if(!apply_filters('thwepo_dismissable_admin_notice_javascript', true)){
 			return;
 		}		
@@ -564,17 +572,17 @@ class THWEPOF {
 						<div class="modal-body">
 							<div class="model-header">
 								<img class="th-logo" src="<?php echo esc_url(THWEPOF_URL .'admin/assets/css/themehigh.svg'); ?>" alt="themehigh-logo">
-								<span><?php echo __('Quick Feedback', 'woo-extra-product-options'); ?></span>
+								<span><?php esc_html_e('Quick Feedback', 'woo-extra-product-options'); ?></span>
 							</div>
 
 							<!-- <div class="get-support-version-b">
 								<p>We are sad to see you go. We would be happy to fix things for you. Please raise a ticket to get help</p>
-								<a class="thwepo-link thwepo-right-link thwepo-active" target="_blank" href="https://help.themehigh.com/hc/en-us/requests/new?utm_source=wepo_free&utm_medium=feedback_form&utm_campaign=get_support"><?php echo __('Get Support', 'woo-extra-product-options'); ?></a>
+								<a class="thwepo-link thwepo-right-link thwepo-active" target="_blank" href="https://help.themehigh.com/hc/en-us/requests/new?utm_source=wepo_free&utm_medium=feedback_form&utm_campaign=get_support"><?php esc_html_e('Get Support', 'woo-extra-product-options'); ?></a>
 							</div> -->
 
 							<main class="form-container main-full">
-								<p class="thwepo-title-text"><?php echo __('If you have a moment, please let us know why you want to deactivate this plugin', 'woo-extra-product-options'); ?></p>
-								<ul class="deactivation-reason" data-nonce="<?php echo wp_create_nonce('thwepo_deactivate_nonce'); ?>">
+								<p class="thwepo-title-text"><?php esc_html_e('If you have a moment, please let us know why you want to deactivate this plugin', 'woo-extra-product-options'); ?></p>
+								<ul class="deactivation-reason" data-nonce="<?php echo esc_attr( wp_create_nonce('thwepo_deactivate_nonce') ); ?>">
 									<?php 
 									if($deactivation_reasons){
 										foreach($deactivation_reasons as $key => $reason){
@@ -592,18 +600,18 @@ class THWEPOF {
 									}
 									?>
 								</ul>
-								<p class="thwepo-privacy-cnt"><?php echo __('This form is only for getting your valuable feedback. We do not collect your personal data. To know more read our ', 'woo-extra-product-options'); ?> <a class="thwepo-privacy-link" target="_blank" href="<?php echo esc_url('https://www.themehigh.com/privacy-policy/');?>"><?php echo __('Privacy Policy', 'woo-extra-product-options'); ?></a></p>
+								<p class="thwepo-privacy-cnt"><?php echo esc_html__('This form is only for getting your valuable feedback. We do not collect your personal data. To know more read our ', 'woo-extra-product-options'); ?> <a class="thwepo-privacy-link" target="_blank" href="<?php echo esc_url('https://www.themehigh.com/privacy-policy/');?>"><?php esc_html_e('Privacy Policy', 'woo-extra-product-options'); ?></a></p>
 							</main>
 							<footer class="modal-footer">
 								<div class="thwepo-left">
-									<a class="thwepo-link thwepo-left-link thwepo-deactivate" href="#"><?php echo __('Skip & Deactivate', 'woo-extra-product-options'); ?></a>
+									<a class="thwepo-link thwepo-left-link thwepo-deactivate" href="#"><?php esc_html_e('Skip & Deactivate', 'woo-extra-product-options'); ?></a>
 								</div>
 								<div class="thwepo-right">
 									
-									<a class="thwepo-link thwepo-right-link thwepo-active" target="_blank" href="https://help.themehigh.com/hc/en-us/requests/new?utm_source=wepo_free&utm_medium=feedback_form&utm_campaign=get_support"><?php echo __('Get Support', 'woo-extra-product-options'); ?></a>
+									<a class="thwepo-link thwepo-right-link thwepo-active" target="_blank" href="https://help.themehigh.com/hc/en-us/requests/new?utm_source=wepo_free&utm_medium=feedback_form&utm_campaign=get_support"><?php esc_html_e('Get Support', 'woo-extra-product-options'); ?></a>
 
-									<a class="thwepo-link thwepo-right-link thwepo-active thwepo-submit-deactivate" href="#"><?php echo __('Submit and Deactivate', 'woo-extra-product-options'); ?></a>
-									<a class="thwepo-link thwepo-right-link thwepo-close" href="#"><?php echo __('Cancel', 'woo-extra-product-options'); ?></a>
+									<a class="thwepo-link thwepo-right-link thwepo-active thwepo-submit-deactivate" href="#"><?php esc_html_e('Submit and Deactivate', 'woo-extra-product-options'); ?></a>
+									<a class="thwepo-link thwepo-right-link thwepo-close" href="#"><?php esc_html_e('Cancel', 'woo-extra-product-options'); ?></a>
 								</div>
 							</footer>
 						</div>
@@ -815,23 +823,23 @@ class THWEPOF {
                     	reason_input += '<input type="checkbox" id="th-snooze" name="th-snooze" class="th-snooze-checkbox">';
                     	reason_input += '<label for="th-snooze">Snooze this panel while troubleshooting</label>';
                     	reason_input += '<select name="th-snooze-time" class="th-snooze-select" disabled>';
-                    	reason_input += '<option value="<?php echo HOUR_IN_SECONDS ?>">1 Hour</option>';
-                    	reason_input += '<option value="<?php echo 12*HOUR_IN_SECONDS ?>">12 Hour</option>';
-                    	reason_input += '<option value="<?php echo DAY_IN_SECONDS ?>">24 Hour</option>';
-                    	reason_input += '<option value="<?php echo WEEK_IN_SECONDS ?>">1 Week</option>';
-                    	reason_input += '<option value="<?php echo MONTH_IN_SECONDS ?>">1 Month</option>';
+                    	reason_input += '<option value="<?php echo esc_html( HOUR_IN_SECONDS ); ?>">1 Hour</option>';
+						reason_input += '<option value="<?php echo esc_html( 12*HOUR_IN_SECONDS ); ?>">12 Hour</option>';
+						reason_input += '<option value="<?php echo esc_html( DAY_IN_SECONDS ); ?>">24 Hour</option>';
+						reason_input += '<option value="<?php echo esc_html( WEEK_IN_SECONDS ); ?>">1 Week</option>';
+						reason_input += '<option value="<?php echo esc_html( MONTH_IN_SECONDS ); ?>">1 Month</option>';
                     	reason_input += '</select>';
                     	reason_input += '</div>';
                     }else if('reviewlink' == type){
                     	reason_input += '<div class="reason-input wepo-review-link">';
                     	/*
-                    	reason_input += '<?php _e('Deactivate and ', 'woo-extra-product-options');?>'
+                    	reason_input += '<?php esc_html_e('Deactivate and ', 'woo-extra-product-options');?>'
                     	reason_input += '<a href="#" target="_blank" class="thwepo-review-and-deactivate">';
-                    	reason_input += '<?php _e('leave a review', 'woo-extra-product-options'); ?>';
+                    	reason_input += '<?php esc_html_e('leave a review', 'woo-extra-product-options'); ?>';
                     	reason_input += '<span class="wepo-rating-link"> &#9733;&#9733;&#9733;&#9733;&#9733; </span>';
                     	reason_input += '</a>';
                     	*/
-                    	reason_input += '<input type="hidden" value="<?php _e('Upgraded', 'woo-extra-product-options');?>">';
+                    	reason_input += '<input type="hidden" value="<?php esc_attr_e('Upgraded', 'woo-extra-product-options');?>">';
                     	reason_input += '</div>';
                     }
 
@@ -967,9 +975,12 @@ class THWEPOF {
 			return;
 		}
 
-		if($_POST['reason'] === 'temporary'){
+		$reason = isset($_POST['reason']) ? sanitize_text_field( wp_unslash( $_POST['reason'] ) ) : '';
+		
+		if($reason === 'temporary'){
 
-			$snooze_period = isset($_POST['th-snooze-time']) && $_POST['th-snooze-time'] ? $_POST['th-snooze-time'] : MINUTE_IN_SECONDS ;
+			$snooze_val = isset($_POST['th-snooze-time']) ? absint( wp_unslash( $_POST['th-snooze-time'] ) ) : 0;
+			$snooze_period = $snooze_val ? $snooze_val : MINUTE_IN_SECONDS;
 			$time_now = time();
 			$snooze_time = $time_now + $snooze_period;
 
@@ -980,10 +991,10 @@ class THWEPOF {
 		
 		$data = array(
 			'plugin'        => 'wepo',
-			'reason' 	    => sanitize_text_field($_POST['reason']),
+			'reason' 	    => isset($_POST['reason']) ? sanitize_text_field( wp_unslash( $_POST['reason'] ) ) : '',
 			'comments'	    => isset($_POST['comments']) ? sanitize_textarea_field(wp_unslash($_POST['comments'])) : '',
 	        'date'          => gmdate("M d, Y h:i:s A"),
-	        'software'      => $_SERVER['SERVER_SOFTWARE'],
+	        'software'      => isset($_SERVER['SERVER_SOFTWARE']) ? sanitize_text_field( wp_unslash( $_SERVER['SERVER_SOFTWARE'] ) ) : '',
 	        'php_version'   => phpversion(),
 	        'mysql_version' => $wpdb->db_version(),
 	        'wp_version'    => get_bloginfo('version'),

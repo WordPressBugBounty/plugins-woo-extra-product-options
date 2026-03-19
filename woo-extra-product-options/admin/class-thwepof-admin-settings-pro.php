@@ -80,8 +80,8 @@ class THWEPOF_Admin_Settings_Pro extends THWEPOF_Admin_Settings {
                 <div class="th-try-demo">
                     <h3 class="trydemo-heading">Exclusive Perks of Upgrading to the Best</h3>
                     <p class="try-demo-desc">With the premium version of the Extra Product Options for WooCommerce Plugin, you can effortlessly define products with the most-sought fields and features that are inherited from world-class WooCommerce stores.</p>
-                    <div class="th-pro-btn"><a class="btn-get-pro" onclick="this.classList.add('clicked')" href="<?php echo esc_url($url); ?>" target="_blank" rel="noopener noreferrer" ><?php echo __('Get Pro', 'woo-extra-product-options');?></a><a class="btn-try-demo" href="https://flydemos.com/wepo/?utm_source=free&utm_medium=banner&utm_campaign=trydemo"
-                        target="_blank" rel="noopener noreferrer" onclick="this.classList.add('clicked')" ><?php echo __('Try Demo', 'woo-extra-product-options');?></a></div>
+                    <div class="th-pro-btn"><a class="btn-get-pro" onclick="this.classList.add('clicked')" href="<?php echo esc_url($url); ?>" target="_blank" rel="noopener noreferrer" ><?php echo esc_html( __('Get Pro', 'woo-extra-product-options') );?></a><a class="btn-try-demo" href="https://flydemos.com/wepo/?utm_source=free&utm_medium=banner&utm_campaign=trydemo"
+                        target="_blank" rel="noopener noreferrer" onclick="this.classList.add('clicked')" ><?php echo esc_html( __('Try Demo', 'woo-extra-product-options') );?></a></div>
                     <!-- <img class="vedio" src="" alt="no img">  ADD vedio tutorial-->
                 </div>
                 <section class="th-wepo-key-feature">
@@ -149,34 +149,34 @@ class THWEPOF_Admin_Settings_Pro extends THWEPOF_Admin_Settings {
                     <div class="th-wepo-field-type-img">
                         <div class="th-fields">
                             <ul class="th-wepo-field-list">
-                                <li><?php echo __('Text', 'woo-extra-product-options');?></li>
-                                <li><?php echo __('Hidden', 'woo-extra-product-options');?></li>
-                                <li><?php echo __('Password', 'woo-extra-product-options');?></li>
-                                <li><?php echo __('Telephone', 'woo-extra-product-options');?></li>
-                                <li><?php echo __('Number', 'woo-extra-product-options');?></li>
-                                <li><?php echo __('Email', 'woo-extra-product-options');?></li>
-                                <li><?php echo __('URL', 'woo-extra-product-options');?></li>
-                                <li><?php echo __('Textarea', 'woo-extra-product-options');?></li>
-                                <li><?php echo __('Slider/Range', 'woo-extra-product-options');?></li>
-                                <li><?php echo __('Switch', 'woo-extra-product-options');?></li>
-                                <li><?php echo __('Radio', 'woo-extra-product-options');?></li>
-                                <li><?php echo __('Select', 'woo-extra-product-options');?></li>
-                                <li><?php echo __('Multiselect ', 'woo-extra-product-options');?><span class="th-crown"><img src="<?php echo esc_url(THWEPOF_URL .'admin/assets/css/crown.svg'); ?>"></span></li>
-                                <li><?php echo __('Checkbox', 'woo-extra-product-options');?></li>
-                                <li><?php echo __('Checkbox Group', 'woo-extra-product-options');?></li>
-                                <li><?php echo __('Date Picker', 'woo-extra-product-options');?></li>
-                                <li><?php echo __('Time Picker', 'woo-extra-product-options');?></li>
-                                <li><?php echo __('Date & Time Range Picker', 'woo-extra-product-options');?><span class="th-crown"><img src="<?php echo esc_url(THWEPOF_URL .'admin/assets/css/crown.svg'); ?>"></span></li>
-                                <li><?php echo __('Color Picker', 'woo-extra-product-options');?></li>
-                                <li><?php echo __('Color Palette', 'woo-extra-product-options');?><span class="th-crown"><img src="<?php echo esc_url(THWEPOF_URL .'admin/assets/css/crown.svg'); ?>"></span></li>
-                                <li><?php echo __('Image Group', 'woo-extra-product-options');?><span class="th-crown"><img src="<?php echo esc_url(THWEPOF_URL .'admin/assets/css/crown.svg'); ?>"></span></li>
-                                <li><?php echo __('Product Group', 'woo-extra-product-options');?><span class="th-new"><img src="<?php echo esc_url(THWEPOF_URL .'admin/assets/css/new.png'); ?>"></span><span class="th-crown"><img src="<?php echo esc_url(THWEPOF_URL .'admin/assets/css/crown.svg'); ?>"></span></li>
-                                <li><?php echo __('File Upload', 'woo-extra-product-options');?><span class="th-crown"><img src="<?php echo esc_url(THWEPOF_URL .'admin/assets/css/crown.svg'); ?>"></span></li>
-                                <li><?php echo __('Heading', 'woo-extra-product-options');?></li>
-                                <li><?php echo __('Paragraph/Label', 'woo-extra-product-options');?></li>
-                                <li><?php echo __('HTML', 'woo-extra-product-options');?><span class="th-crown"><img src="<?php echo esc_url(THWEPOF_URL .'admin/assets/css/crown.svg'); ?>"></span></li>
-                                <li><?php echo __('Separator', 'woo-extra-product-options');?></li>
-                                <li><?php echo __('Label swatches', 'woo-extra-product-options');?><span class="th-new"><img src="<?php echo esc_url(THWEPOF_URL .'admin/assets/css/new.png'); ?>"></span><span class="th-crown"><img src="<?php echo esc_url(THWEPOF_URL .'admin/assets/css/crown.svg'); ?>"></span></li>
+                                <li><?php echo esc_html( __('Text', 'woo-extra-product-options') ); ?></li>
+                                <li><?php echo esc_html( __('Hidden', 'woo-extra-product-options')); ?></li>
+                                <li><?php echo esc_html( __('Password', 'woo-extra-product-options')); ?></li>
+                                <li><?php echo esc_html( __('Telephone', 'woo-extra-product-options')); ?></li>
+                                <li><?php echo esc_html( __('Number', 'woo-extra-product-options')); ?></li>
+                                <li><?php echo esc_html( __('Email', 'woo-extra-product-options')); ?></li>
+                                <li><?php echo esc_html( __('URL', 'woo-extra-product-options')); ?></li>
+                                <li><?php echo esc_html( __('Textarea', 'woo-extra-product-options')); ?></li>
+                                <li><?php echo esc_html( __('Slider/Range', 'woo-extra-product-options')); ?></li>
+                                <li><?php echo esc_html( __('Switch', 'woo-extra-product-options')); ?></li>
+                                <li><?php echo esc_html( __('Radio', 'woo-extra-product-options')); ?></li>
+                                <li><?php echo esc_html( __('Select', 'woo-extra-product-options')); ?></li>
+                                <li><?php echo esc_html( __('Multiselect ', 'woo-extra-product-options') ); ?><span class="th-crown"><img src="<?php echo esc_url(THWEPOF_URL .'admin/assets/css/crown.svg'); ?>"></span></li>
+                                <li><?php echo esc_html( __('Checkbox', 'woo-extra-product-options')); ?></li>
+                                <li><?php echo esc_html( __('Checkbox Group', 'woo-extra-product-options')); ?></li>
+                                <li><?php echo esc_html( __('Date Picker', 'woo-extra-product-options')); ?></li>
+                                <li><?php echo esc_html( __('Time Picker', 'woo-extra-product-options')); ?></li>
+                                <li><?php echo esc_html( __('Date & Time Range Picker', 'woo-extra-product-options') ); ?><span class="th-crown"><img src="<?php echo esc_url(THWEPOF_URL .'admin/assets/css/crown.svg'); ?>"></span></li>
+                                <li><?php echo esc_html( __('Color Picker', 'woo-extra-product-options')); ?></li>
+                                <li><?php echo esc_html( __('Color Palette', 'woo-extra-product-options') ); ?><span class="th-crown"><img src="<?php echo esc_url(THWEPOF_URL .'admin/assets/css/crown.svg'); ?>"></span></li>
+                                <li><?php echo esc_html( __('Image Group', 'woo-extra-product-options') ); ?><span class="th-crown"><img src="<?php echo esc_url(THWEPOF_URL .'admin/assets/css/crown.svg'); ?>"></span></li>
+                                <li><?php echo esc_html( __('Product Group', 'woo-extra-product-options') ); ?><span class="th-new"><img src="<?php echo esc_url(THWEPOF_URL .'admin/assets/css/new.png'); ?>"></span><span class="th-crown"><img src="<?php echo esc_url(THWEPOF_URL .'admin/assets/css/crown.svg'); ?>"></span></li>
+                                <li><?php echo esc_html( __('File Upload', 'woo-extra-product-options') ); ?><span class="th-crown"><img src="<?php echo esc_url(THWEPOF_URL .'admin/assets/css/crown.svg'); ?>"></span></li>
+                                <li><?php echo esc_html( __('Heading', 'woo-extra-product-options')); ?></li>
+                                <li><?php echo esc_html( __('Paragraph/Label', 'woo-extra-product-options')); ?></li>
+                                <li><?php echo esc_html( __('HTML', 'woo-extra-product-options') ); ?><span class="th-crown"><img src="<?php echo esc_url(THWEPOF_URL .'admin/assets/css/crown.svg'); ?>"></span></li>
+                                <li><?php echo esc_html( __('Separator', 'woo-extra-product-options')); ?></li>
+                                <li><?php echo esc_html( __('Label swatches', 'woo-extra-product-options') ); ?><span class="th-new"><img src="<?php echo esc_url(THWEPOF_URL .'admin/assets/css/new.png'); ?>"></span><span class="th-crown"><img src="<?php echo esc_url(THWEPOF_URL .'admin/assets/css/crown.svg'); ?>"></span></li>
                             </ul>
                         </div>
                         <div class="th-fields-img">
@@ -349,7 +349,7 @@ class THWEPOF_Admin_Settings_Pro extends THWEPOF_Admin_Settings {
                         <h3 class="switch-to-pro-heading">Switch to Pro version and be a part of our limitless features</h3>
                         <p>Switch to Pro and unlock access to a few of the most sought-after features on your product page and experience one-of-a-kind personalization like never before.</p>
                         <!-- <div class="th-button-get-pro-link"> -->
-                            <a class="button-get-pro" href="<?php echo esc_url($url); ?>" target="_blank" rel="noopener noreferrer" onclick="this.classList.add('clicked')"><?php echo __('Get Pro', 'woo-extra-product-options');?></a> 
+                            <a class="button-get-pro" href="<?php echo esc_url($url); ?>" target="_blank" rel="noopener noreferrer" onclick="this.classList.add('clicked')"><?php echo esc_html( __('Get Pro', 'woo-extra-product-options') );?></a> 
                         <!-- </div> -->
                         
                     </div>

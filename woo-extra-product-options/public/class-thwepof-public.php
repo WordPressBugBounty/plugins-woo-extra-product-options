@@ -23,13 +23,15 @@ class THWEPOF_Public {
 			$suffix = $debug_mode ? '' : '.min';
 			$jquery_version = isset($wp_scripts->registered['jquery-ui-core']->ver) ? $wp_scripts->registered['jquery-ui-core']->ver : '1.9.2';
 
+			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy hook compatibility
 			if(apply_filters('thwepo_display_password_view_option', true)){
+				// phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion -- Dashicons version managed by WordPress
 				wp_enqueue_style( 'dashicons' );
 			}
 
-			wp_enqueue_style('thwepof-public-style', THWEPOF_URL.'public/assets/css/thwepof-public'. $suffix .'.css', THWEPOF_VERSION);
-			wp_enqueue_style('jquery-ui-style', THWEPOF_URL.'public/assets/css/jquery-ui/jquery-ui.css');
-			wp_enqueue_style('jquery-timepicker', THWEPOF_URL.'public/assets/js/timepicker/jquery.timepicker.css');
+			wp_enqueue_style('thwepof-public-style', THWEPOF_URL.'public/assets/css/thwepof-public'. $suffix .'.css', array(), THWEPOF_VERSION);
+			wp_enqueue_style('jquery-ui-style', THWEPOF_URL.'public/assets/css/jquery-ui/jquery-ui.css', array(), THWEPOF_VERSION);
+			wp_enqueue_style('jquery-timepicker', THWEPOF_URL.'public/assets/js/timepicker/jquery.timepicker.css', array(), THWEPOF_VERSION);
 
 			wp_register_script('thwepof-input-mask', THWEPOF_URL.'public/assets/js/inputmask-js/jquery.inputmask.min.js', array('jquery'), THWEPOF_VERSION, true);
 			wp_enqueue_script('thwepof-input-mask');
@@ -52,6 +54,7 @@ class THWEPOF_Public {
 		$hp_display_before = apply_filters('thwepof_display_hook_priority_before_add_to_cart_button', 10);
 		$hp_display_after = apply_filters('thwepof_display_hook_priority_after_add_to_cart_button', 10);
 		$hp_validation = apply_filters('thwepof_add_to_cart_validation_hook_priority', 99);
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Legacy hook compatibility
 		$hp_add_item_data = apply_filters('thwepo_add_cart_item_data_hook_priority', 10);
 		$hp_quickview_section_pr = apply_filters('thwepof_quickview_section_hook_priority', 1);
 
@@ -153,7 +156,7 @@ class THWEPOF_Public {
 
 		if($modify && THWEPOF_Utils_Section::has_extra_options($product)){
 			$text_override = THWEPOF_Utils::get_settings('add_to_cart_text_addon');
-			$text = !empty($text_override) ? esc_html(THWEPOF_Utils::t($text_override)) : __( 'Select options', 'woocommerce' );
+			$text = !empty($text_override) ? esc_html(THWEPOF_Utils::t($text_override)) : __( 'Select options', 'woo-extra-product-options' );
 		}else{
 			if($product->is_in_stock() && ($product_type === 'simple' || $product_type === 'bundle')){
 				$text_override = THWEPOF_Utils::get_settings('add_to_cart_text_simple');
@@ -338,6 +341,7 @@ class THWEPOF_Public {
 		if($sections){
 			foreach($sections as $section_name => $section){
 				$section_html = THWEPOF_Utils_Section::prepare_section_html($section, $product);
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Contains escaped HTML from prepare_section_html
 				echo $section_html;
 			}
 		}
@@ -347,7 +351,7 @@ class THWEPOF_Public {
 		global $product;
 		$prod_field_names = THWEPOF_Utils_Section::get_product_fields($product, true);
 		$prod_field_names = is_array($prod_field_names) ? implode(",", $prod_field_names) : '';
-		echo '<input type="hidden" id="thwepof_product_fields" name="thwepof_product_fields" value="'.$prod_field_names.'"/>';
+		echo '<input type="hidden" id="thwepof_product_fields" name="thwepof_product_fields" value="' . esc_attr( $prod_field_names ) . '"/>';
 	}
 
 	public function woo_before_add_to_cart_button(){
@@ -363,6 +367,7 @@ class THWEPOF_Public {
 	    if($content && 'fusion_tb_woo_cart' === $shortcode_handle && apply_filters('thwepof_add_wc_hook_in_avada_builder', true)){
 	        $content = '';
 	        ob_start();
+	        // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WooCommerce Hook
 	        do_action( 'woocommerce_before_single_product' );
 	        woocommerce_template_single_add_to_cart();
 	        $content .= ob_get_clean();
@@ -375,6 +380,7 @@ class THWEPOF_Public {
 	    $ob_name = get_class($obj);
 		if( $ob_name && "XTS\Modules\Layouts\Add_To_Cart" === $ob_name && apply_filters('thwepof_add_wc_hook_in_woodmart_builder', true)){
 			ob_start();
+		    // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WooCommerce Hook
 		    do_action( 'woocommerce_before_single_product' );
 		    woocommerce_template_single_add_to_cart();
 		    ob_get_clean();
@@ -396,9 +402,11 @@ class THWEPOF_Public {
 		//$product_fields = isset( $_POST['thwepof_product_fields'] ) ? wc_clean( $_POST['thwepof_product_fields'] ) : '';
 
 		if($allow_get_method){
-			$product_fields = isset($_REQUEST['thwepof_product_fields']) ? wc_clean($_REQUEST['thwepof_product_fields']) : '';
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Validated in add_to_cart_validation, Sanitized via wc_clean
+			$product_fields = isset($_REQUEST['thwepof_product_fields']) ? wc_clean( wp_unslash( $_REQUEST['thwepof_product_fields'] ) ) : '';
 		}else{
-			$product_fields = isset($_POST['thwepof_product_fields']) ? wc_clean($_POST['thwepof_product_fields']) : '';
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Validated by WooCommerce nonce, Sanitized via wc_clean
+			$product_fields = isset($_POST['thwepof_product_fields']) ? wc_clean( wp_unslash( $_POST['thwepof_product_fields'] ) ) : '';
 		}
 
 		$prod_fields = $product_fields ? explode(",", $product_fields) : array();
@@ -417,11 +425,14 @@ class THWEPOF_Public {
 	}
 
 	public function get_posted_value($name, $type = false){
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.Recommended -- Helper function, nonce checked by caller
 		$is_posted = isset($_POST[$name]) || isset($_REQUEST[$name]) ? true : false;
 		$value = false;
 
 		if($is_posted){
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- Sanitization happens conditionally below
 			$value = isset($_POST[$name]) && $_POST[$name] ? $_POST[$name] : false;
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- Sanitization happens conditionally below
 			$value = empty($value) && isset($_REQUEST[$name]) ? $_REQUEST[$name] : $value;
 
 			if($type === 'textarea'){
@@ -452,6 +463,7 @@ class THWEPOF_Public {
 		if($extra_options){
 			foreach($extra_options as $field_name => $field){
 				$type = $field->get_property('type');
+				// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.NonceVerification.Recommended -- Validated by WooCommerce cart hooks
 				$is_posted = isset($_POST[$field_name]) || isset($_REQUEST[$field_name]) ? true : false;
 				$posted_value = $this->get_posted_value($field_name, $type);
 
@@ -608,7 +620,7 @@ class THWEPOF_Public {
 
 			if($extra_cart_item_data){
 				if(apply_filters('thwepof_set_unique_key_for_cart_item', false, $cart_item_data, $product_id, $variation_id)){
-					$cart_item_data['unique_key'] = md5( microtime().rand() );
+					$cart_item_data['unique_key'] = md5( microtime().wp_rand() );
 				}
 				$cart_item_data['thwepof_options'] = $extra_cart_item_data;
 			}
@@ -652,7 +664,7 @@ class THWEPOF_Public {
 						}
 
 						//$value = $display_option_text ? THWEPOF_Utils::get_option_display_value($name, $value, $data) : $value;
-						$item_data[] = array("name" => __($data['label'],'woo-extra-product-options'), "value" => __($value, 'woo-extra-product-options'));
+						$item_data[] = array("name" => THWEPOF_i18n::translate($data['label'], 'Field Title - ' . $name), "value" => THWEPOF_i18n::translate($value, 'Field Value - ' . $name));
 					}
 				}
 			}
@@ -746,7 +758,7 @@ class THWEPOF_Public {
 							$formatted_meta[$key] = (object) array(
 								'key'           => $meta->key,
 								'value'         => $meta->value,
-								'display_key'   => apply_filters( 'thwepof_order_item_display_meta_key', __($options_extra[$meta->key]->get_property('title'), 'woo-extra-product-options'), $meta, $order_item ),
+								'display_key'   => apply_filters( 'thwepof_order_item_display_meta_key', THWEPOF_i18n::translate($options_extra[$meta->key]->get_property('title'), 'field_' . $meta->key), $meta, $order_item ),
 								'display_value' => wpautop( make_clickable( apply_filters( 'thwepof_order_item_display_meta_value', $display_value, $meta, $order_item ) ) ),
 							);
 						}else{

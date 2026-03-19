@@ -1,21 +1,24 @@
 <?php
 /**
- * Plugin Name: Extra product options For WooCommerce | Custom Product Addons and Fields
+ * Plugin Name: Extra Product Options For WooCommerce | Custom Product Addons and Fields
  * Description: Add extra product options in product page.
  * Author:      ThemeHigh
- * Version:     3.3.4
+ * Version:     3.3.5
  * Author URI:  https://www.themehigh.com
  * Plugin URI:  https://www.themehigh.com
  * Text Domain: woo-extra-product-options
  * Domain Path: /languages
  * Requires Plugins: woocommerce
  * WC requires at least: 6.0.0
- * WC tested up to: 10.4
+ * WC tested up to: 10.6
+ * License: GPLv2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
 
 if(!defined('ABSPATH')){ exit; }
 
 if (!function_exists('is_woocommerce_active')){
+	// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- Helper function
 	function is_woocommerce_active(){
 	    $active_plugins = (array) get_option('active_plugins', array());
 	    if(is_multisite()){
@@ -46,7 +49,7 @@ if(is_woocommerce_active()) {
 			}
 
 			public function init() {
-				define('THWEPOF_VERSION', '3.3.4');
+				define('THWEPOF_VERSION', '3.3.5');
 				!defined('THWEPOF_BASE_NAME') && define('THWEPOF_BASE_NAME', plugin_basename( __FILE__ ));
 				!defined('THWEPOF_PATH') && define('THWEPOF_PATH', plugin_dir_path( __FILE__ ));
 				!defined('THWEPOF_URL') && define('THWEPOF_URL', plugins_url( '/', __FILE__ ));
@@ -54,15 +57,21 @@ if(is_woocommerce_active()) {
 
 				$this->load_plugin_textdomain();
 
+				// Include the translation class
+				require_once THWEPOF_PATH . 'includes/class-thwepof-i18n.php';
+				
 				require_once( THWEPOF_PATH . 'includes/class-thwepof.php' );
 				THWEPOF::instance();
 			}
 
 			public function load_plugin_textdomain(){
+				// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- WordPress Core hook
 				$locale = apply_filters('plugin_locale', get_locale(), self::TEXT_DOMAIN);
 
 				load_textdomain(self::TEXT_DOMAIN, WP_LANG_DIR.'/woo-extra-product-options/'.self::TEXT_DOMAIN.'-'.$locale.'.mo');
-				load_plugin_textdomain(self::TEXT_DOMAIN, false, dirname(THWEPOF_BASE_NAME) . '/languages/');
+				// NOTE: load_plugin_textdomain() is discouraged since WordPress 4.6+
+				// WordPress automatically loads translations for plugins hosted on WordPress.org
+				// 				load_plugin_textdomain(self::TEXT_DOMAIN, false, dirname(THWEPOF_BASE_NAME) . '/languages/');
 			}
 		}
 	}

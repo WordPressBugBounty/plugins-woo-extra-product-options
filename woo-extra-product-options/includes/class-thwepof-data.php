@@ -52,10 +52,15 @@ class THWEPOF_Data {
 
 							$display_value = $value;
 
+							// Use i18n class for dynamic field title translation
+							$field_key = $meta->key;
+							$field_title = $options_extra[$meta->key]->get_property('title');
+							$translated_title = THWEPOF_i18n::translate($field_title, "field_" . $field_key);
+
 							$formatted_meta[$key] = (object) array(
 								'key'           => $meta->key,
 								'value'         => $meta->value,
-								'display_key'   => apply_filters( 'thwepof_order_item_display_meta_key', __($options_extra[$meta->key]->get_property('title'), 'woo-extra-product-options'), $meta, $order_item ),
+								'display_key'   => apply_filters( 'thwepof_order_item_display_meta_key', $translated_title, $meta, $order_item ),
 								'display_value' => wpautop( make_clickable( apply_filters( 'thwepof_order_item_display_meta_value', $display_value, $meta, $order_item ) ) ),
 							);
 						}else{
@@ -77,7 +82,7 @@ class THWEPOF_Data {
 		}
 
 		$productsList = array();
-		$value = isset($_POST['value']) ? wc_clean(wp_unslash($_POST['value'])) : '';
+		$value = isset($_POST['value']) ? sanitize_text_field( wp_unslash( $_POST['value'] ) ) : '';
 		$count = 0;
 
 		$limit = apply_filters('thwepof_load_products_per_page', 100);
@@ -103,8 +108,8 @@ class THWEPOF_Data {
 			$count = count($products);
 
 		}else{
-			$term = isset($_POST['term']) ? wc_clean(wp_unslash($_POST['term'])) : '';
-			$page = isset($_POST['page']) ? wc_clean(wp_unslash($_POST['page'])) : 1;
+			$term = isset($_POST['term']) ? sanitize_text_field( wp_unslash( $_POST['term'] ) ) : '';
+			$page = isset($_POST['page']) ? absint( wp_unslash( $_POST['page'] ) ) : 1;
 
 		    $status = apply_filters('thwepof_load_products_status', 'publish');
 
@@ -146,9 +151,11 @@ class THWEPOF_Data {
 
 		if($is_wpml_active){
 			global $sitepress;
+			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- WPML's global variable
 			global $icl_adjust_id_url_filter_off;
 
 			$orig_flag_value = $icl_adjust_id_url_filter_off;
+			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- WPML global variable
 			$icl_adjust_id_url_filter_off = true;
 			$default_lang = $sitepress->get_default_language();
 			$current_lang = $sitepress->get_current_language();
@@ -157,6 +164,7 @@ class THWEPOF_Data {
 			$products = wc_get_products($args);
 
 			$sitepress->switch_lang($current_lang);
+			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- WPML global variable
 			$icl_adjust_id_url_filter_off = $orig_flag_value;
 		}else{
 			$products = wc_get_products($args);

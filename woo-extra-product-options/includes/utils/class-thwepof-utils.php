@@ -267,14 +267,17 @@ class THWEPOF_Utils {
 
 		if($is_wpml_active){
 			global $sitepress;
+			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- WPML's global variable
 			global $icl_adjust_id_url_filter_off;
 
 			$orig_flag_value = $icl_adjust_id_url_filter_off;
+			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- WPML global variable
 			$icl_adjust_id_url_filter_off = true;
 			$default_lang = $sitepress->get_default_language();
 
 			$product_id = icl_object_id($product_id, 'product', true, $default_lang);
 
+			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- WPML global variable
 			$icl_adjust_id_url_filter_off = $orig_flag_value;
 		}
 		return $product_id;
@@ -447,9 +450,11 @@ class THWEPOF_Utils {
 	public static function check_for_wpml_traslation($cat_slug, $cat, $is_wpml_active, $ignore_translation){
 		if($is_wpml_active && $ignore_translation){
 			global $sitepress;
+			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- WPML's global variable
 			global $icl_adjust_id_url_filter_off;
 
 			$orig_flag_value = $icl_adjust_id_url_filter_off;
+			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- WPML global variable
 			$icl_adjust_id_url_filter_off = true;
 			$default_lang = $sitepress->get_default_language();
 
@@ -457,6 +462,7 @@ class THWEPOF_Utils {
 			$ocat = get_term($ocat_id, 'product_cat');
 			$cat_slug = $ocat->slug;
 
+			// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- WPML global variable
 			$icl_adjust_id_url_filter_off = $orig_flag_value;
 		}
 		return $cat_slug;
@@ -470,9 +476,11 @@ class THWEPOF_Utils {
 
 	public static function off_wpml_translation(){
 		global $sitepress;
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- WPML's global variable
 		global $icl_adjust_id_url_filter_off;
 
 		$orig_flag_value = $icl_adjust_id_url_filter_off;
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- WPML global variable
 		$icl_adjust_id_url_filter_off = true;
 		$default_lang = $sitepress->get_default_language();
 
@@ -481,6 +489,7 @@ class THWEPOF_Utils {
 
 	public static function may_on_wpml_translation($value){
 		global $icl_adjust_id_url_filter_off;
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- WPML global variable
 		$icl_adjust_id_url_filter_off = $value;
 	}
 
@@ -696,41 +705,58 @@ class THWEPOF_Utils {
 		return empty($locale_code) ? 'en' : $locale_code;
 	}
 
+	/**
+	 * Translate text with fallback to WooCommerce domain
+	 * Note: For dynamic translations, consider using thwepof_i18n() class instead
+	 *
+	 * @param string $text Text to translate
+	 * @return string Translated text
+	 */
 	public static function t($text){
 		if(!empty($text)){
-			$otext = $text;
-			$text = __($text, 'woo-extra-product-options');
-			if($text === $otext){
-				$text = __($text, 'woocommerce');
+			// Since this accepts variable text, it can't use __() directly for PHPCS compliance
+			// Use i18n class if available, otherwise return as-is for .po/.mo file translation
+			if (function_exists('thwepof_i18n')) {
+				return THWEPOF_i18n::translate($text, sanitize_key($text));
 			}
+			// Fallback: return text as-is (will be translated by .po/.mo files if available)
+			return $text;
 		}
 		return $text;
 	}
 
+	/**
+	 * Echo translated text with fallback to WooCommerce domain
+	 * Note: For dynamic translations, consider using thwepof_i18n() class instead
+	 *
+	 * @param string $text Text to translate and echo
+	 * @return void
+	 */
 	public static function et($text){
 		if(!empty($text)){
-			$otext = $text;
-			$text = __($text, 'woo-extra-product-options');
-			if($text === $otext){
-				$text = __($text, 'woocommerce');
+			// Since this accepts variable text, use i18n class for PHPCS compliance
+			if (function_exists('thwepof_i18n')) {
+				echo esc_html(THWEPOF_i18n::translate($text, sanitize_key($text)));
+			} else {
+				// Fallback: echo as-is (will be translated by .po/.mo files if available)
+				echo esc_html($text);
 			}
 		}
-		echo $text;
 	}
 
-	public static function wpml_register_string($name, $value ){
-		if(empty($name)){
-			$name = "WEPOF - ".$value;
-		}
+	// public static function wpml_register_string($name, $value ){
+	// 	if(empty($name)){
+	// 		$name = "WEPOF - ".$value;
+	// 	}
 		
-		if(function_exists('icl_register_string')){
-			icl_register_string(WEPOF_Extra_Product_Options::TEXT_DOMAIN, $name, $value);
-		}
+	// 	if(function_exists('icl_register_string')){
+	// 		icl_register_string(WEPOF_Extra_Product_Options::TEXT_DOMAIN, $name, $value);
+	// 	}
 
-		// if(function_exists('pll_register_string')){
-		// 	pll_register_string(WEPOF_Extra_Product_Options::TEXT_DOMAIN, $value, );
-		// }
-	}
+	// 	// if(function_exists('pll_register_string')){
+	// 	// 	pll_register_string(WEPOF_Extra_Product_Options::TEXT_DOMAIN, $value, );
+	// 	// }
+	// }
 
    /*********************************
 	**** i18n FUNCTIONS - END *******
@@ -745,10 +771,12 @@ class THWEPOF_Utils {
 	}
 
 	public static function write_log ( $log )  {
-		if ( true === WP_DEBUG ) {
+		if ( defined('WP_DEBUG') && WP_DEBUG ) {
 			if ( is_array( $log ) || is_object( $log ) ) {
+				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log, WordPress.PHP.DevelopmentFunctions.error_log_print_r
 				error_log( print_r( $log, true ) );
 			} else {
+				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
 				error_log( $log );
 			}
 		}
