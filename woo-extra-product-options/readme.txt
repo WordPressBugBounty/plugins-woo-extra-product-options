@@ -3,9 +3,9 @@ Contributors: ThemeHigh
 Donate link: https://themehigh.com/
 Tags:  extra product options, product addons, woocommerce product addons, woocommerce product fields, product options
 Requires at least: 4.9
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 5.6
-Stable tag: 3.3.5
+Stable tag: 3.3.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -302,6 +302,10 @@ Yes, it is compatible with Astra, Storefront. Also compatible with Avada, divi b
 
 == Changelog ==
 
+= 3.3.6 =
+* Added WooCommerce 10.8 compatibility.
+* Added WordPress 7.0 compatibility.
+
 = 3.3.5 =
 * Added WooCommerce 10.6 compatibility.
 * Improved overall security and stability.
@@ -318,8 +322,5 @@ Yes, it is compatible with Astra, Storefront. Also compatible with Avada, divi b
 * Added new field type **Time Picker**.
 * Added WooCommerce 9.8 compatibility.
 * Added WordPress 6.8 compatibility.
-
-= 3.3.1 =
-* Added WooCommerce 9.6 compatibility.
 
 [See full changelog](https://plugins.svn.wordpress.org/woo-extra-product-options/trunk/changelog.txt)

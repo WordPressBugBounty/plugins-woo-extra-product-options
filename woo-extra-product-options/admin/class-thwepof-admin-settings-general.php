@@ -203,15 +203,15 @@ class THWEPOF_Admin_Settings_General extends THWEPOF_Admin_Settings {
 			$section = THWEPOF_Utils_Section::prepare_default_section();
 		}
 
-		if($action === 'new' || $action === 'copy'){
-			echo wp_kses_post($this->save_or_update_field($section, $action));	
-		}else if($action === 'edit'){
-			echo wp_kses_post($this->save_or_update_field($section, $action));
+		if ($action === 'new' || $action === 'copy' || $action === 'edit') {
+			$output = $this->save_or_update_field($section, $action);
+			echo wp_kses_post($output ?? '');
 		}
-		
+
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified in save_fields
-		if(isset($_POST['save_fields'])){
-			echo wp_kses_post($this->save_fields($section));
+		if (isset($_POST['save_fields'])) {
+			$output = $this->save_fields($section);
+			echo wp_kses_post($output ?? '');
 		}
 
 		$section = THWEPOF_Utils::get_section_admin($section_name);

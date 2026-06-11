@@ -405,7 +405,7 @@ class THWEPOF_Admin_Form_Field extends THWEPOF_Admin_Form{
 			$this->render_form_elm_row($this->field_props['title']);
 			$this->render_form_elm_row($this->field_props['value']);
 			$this->render_form_elm_row($this->field_props['placeholder']);
-			$this->render_form_elm_row($this->field_props['validator']);
+			// $this->render_form_elm_row($this->field_props['validator']);
 
 			$this->render_form_elm_row_cb($this->field_props['required']);
 			$this->render_form_elm_row_cb($this->field_props['enabled']);
