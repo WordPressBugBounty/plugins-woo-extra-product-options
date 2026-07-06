@@ -132,9 +132,9 @@ abstract class THWEPOF_Admin_Settings{
 	public function output_review_request_link(){
 
 		$current_screen = get_current_screen();
-		if($current_screen->id !== 'product_page_thwepof_extra_product_options'){
+		if(($current_screen->id !== 'product_page_thwepof_extra_product_options') && ($current_screen->id !== 'themehigh_page_thwepof_extra_product_options' )){
 			return;
-		}
+		} //added both id's (legacy and main settings) since we moved the plugin to themehigh menu
 
 		if(!apply_filters('thwepof_show_dismissable_admin_notice', true)){
 			return;

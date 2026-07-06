@@ -1022,9 +1022,9 @@ class THWEPOF {
 	public function quick_links(){
 
 		$current_screen = get_current_screen();
-		if($current_screen->id !== 'product_page_thwepof_extra_product_options'){
+		if(($current_screen->id !== 'product_page_thwepof_extra_product_options') && ($current_screen->id !== 'themehigh_page_thwepof_extra_product_options' )){
 			return;
-		}
+		} //added both id's (legacy and main settings) since we moved the plugin to themehigh menu
 		
 		?>
 		<div class="th_quick_widget-float">

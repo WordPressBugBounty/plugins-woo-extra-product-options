@@ -484,7 +484,7 @@ class THWEPOF_Public {
 		$field_label = $field->get_property('title');
 		$ftype = $field->get_property('type');
 
-		if($field->is_required() && empty($value)) {
+		if($field->is_required() && THWEPOF_Utils::is_empty($value)) {
 
 			/* translators: %s: field name */
 			THWEPOF_Utils::wcpf_add_error(apply_filters('thwepof_required_field_notice', sprintf(__('%s is a required field.', 'woo-extra-product-options'), '<strong>'. wp_kses_post($field_label) .'</strong>')));
@@ -585,10 +585,10 @@ class THWEPOF_Public {
 			foreach($extra_options as $name => $field){
 				$type = $field->get_property('type');
 				$posted_value = $this->get_posted_value($name, $type);
-				if($posted_value) {
+				if(!THWEPOF_Utils::is_empty($posted_value)) {
 					if(is_array($posted_value)){
 						// Filter out any empty values
-						$posted_value = array_filter($posted_value);
+						$posted_value = array_filter($posted_value, 'strlen');
 						if(empty($posted_value)){
 							continue;
 						}

@@ -796,5 +796,17 @@ class THWEPOF_Utils {
 	public static function get_cart_item_color_display($display_value){
 		return '<span style="line-height: 0px;padding: 0px; font-size: 22px; color:' . $display_value .';">&#9632;</span>' . $display_value;
 	}
+
+	/**
+     * Check the value is empty but not zero, that is - the vlaue is  empty string,
+     * null, boolean false or empty array
+     *
+     * @access public
+     * @param mixed $value
+     * @return bool
+     */
+    public static function is_empty($value){
+        return ($value === '' || $value === null || $value === false || ((is_array($value) || is_object($value)) && count($value) === 0));
+    }
 }
 endif;

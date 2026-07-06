@@ -3,14 +3,14 @@
  * Plugin Name: Extra Product Options For WooCommerce | Custom Product Addons and Fields
  * Description: Add extra product options in product page.
  * Author:      ThemeHigh
- * Version:     3.3.6
+ * Version:     3.3.7
  * Author URI:  https://www.themehigh.com
  * Plugin URI:  https://www.themehigh.com
  * Text Domain: woo-extra-product-options
  * Domain Path: /languages
  * Requires Plugins: woocommerce
  * WC requires at least: 6.0.0
- * WC tested up to: 10.8
+ * WC tested up to: 10.9
  * License: GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -49,7 +49,7 @@ if(is_woocommerce_active()) {
 			}
 
 			public function init() {
-				define('THWEPOF_VERSION', '3.3.6');
+				define('THWEPOF_VERSION', '3.3.7');
 				!defined('THWEPOF_BASE_NAME') && define('THWEPOF_BASE_NAME', plugin_basename( __FILE__ ));
 				!defined('THWEPOF_PATH') && define('THWEPOF_PATH', plugin_dir_path( __FILE__ ));
 				!defined('THWEPOF_URL') && define('THWEPOF_URL', plugins_url( '/', __FILE__ ));
@@ -82,6 +82,7 @@ if(is_woocommerce_active()) {
 	function thwepof_before_woocommerce_init() {
 	    if ( class_exists( '\Automattic\WooCommerce\Utilities\FeaturesUtil' ) ) {
 	        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', __FILE__, true );
 	    }
 	}
 }

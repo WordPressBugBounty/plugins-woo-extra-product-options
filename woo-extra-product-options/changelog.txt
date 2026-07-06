@@ -1,5 +1,9 @@
 === Changelog ===
 
+= 3.3.7 =
+* Added WooCommerce 10.9 compatibility.
+* Improved validation for required fields.
+
 = 3.3.6 =
 * Added WooCommerce 10.8 compatibility.
 * Added WordPress 7.0 compatibility.
